@@ -15,7 +15,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.chip{border:1px solid #344958;background:#1a2833;color:#dce9ef;border-radius:999px;padding:6px 10px;font-size:12px;cursor:pointer}.chip:hover{border-color:var(--accent);color:var(--accent)}
 .side-title{display:flex;align-items:center;gap:9px;margin-bottom:12px}.dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}.side h3{margin:0}.side p,.side li{font-size:14px;color:var(--muted)}.side ul{padding-left:18px;margin:12px 0 0}.side li+li{margin-top:8px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #31584f;background:#17332e;color:var(--accent);border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 #result{margin-top:18px;display:none}.result-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}.result-head h3{font-size:22px;margin:0 0 4px}.result-head p{color:var(--muted);margin:0;font-size:14px}.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:17px}.result-block{background:#101921;border:1px solid #263744;border-radius:13px;padding:14px}.result-block h4{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 8px}.result-block p{margin:0;color:#d7e2e8;font-size:14px}.result-block ol,.result-block ul{padding-left:19px;margin:0;color:#d7e2e8;font-size:14px}.result-block li+li{margin-top:7px}.full{grid-column:1/-1}.evidence{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px!important;color:#b7c8d2!important;overflow-wrap:anywhere}
-.notice{border-left:3px solid var(--warn);padding:10px 12px;background:#2c261b;border-radius:0 9px 9px 0;color:#f4d9aa;font-size:13px;margin-top:15px}.unknown{border-left-color:var(--warn)}footer{color:#758895;font-size:12px;text-align:center;margin-top:24px}a{color:var(--accent)}@media(max-width:760px){main{padding-top:22px}.layout{grid-template-columns:1fr}.panel{padding:18px}.side{order:2}.result-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero{margin-top:24px}.hero p{font-size:15px}}
+.guided{margin:0 0 18px;border-color:#35665c;background:linear-gradient(145deg,#18332f,#14232a)}.guided-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.guided-grid .wide{grid-column:1/-1}.guided .hint{margin-top:6px}.guided select,.guided input{width:100%;border:1px solid #3b4c5b;border-radius:12px;background:#0e171f;color:var(--text);font:inherit;padding:11px 12px}.guided label{margin-top:12px}.guided-intro{color:var(--muted);font-size:14px;margin:0 0 12px}.guided-tag{display:inline-flex;border:1px solid #31584f;background:#17332e;color:var(--accent);border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}@media(max-width:760px){.guided-grid{grid-template-columns:1fr}.guided-grid .wide{grid-column:auto}}.notice{border-left:3px solid var(--warn);padding:10px 12px;background:#2c261b;border-radius:0 9px 9px 0;color:#f4d9aa;font-size:13px;margin-top:15px}.unknown{border-left-color:var(--warn)}footer{color:#758895;font-size:12px;text-align:center;margin-top:24px}a{color:var(--accent)}@media(max-width:760px){main{padding-top:22px}.layout{grid-template-columns:1fr}.panel{padding:18px}.side{order:2}.result-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero{margin-top:24px}.hero p{font-size:15px}}
 </style>
 </head>
 <body>
@@ -29,6 +29,56 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     <p>Describe your dbt problem and get a structured diagnosis, safe next steps, validation checks, and prevention ideas. Unknown cases stay unknown instead of guessing.</p>
   </section>
 
+  <section class="panel guided" aria-labelledby="guided-title">
+    <span class="guided-tag">Start here if you're unsure</span>
+    <h3 id="guided-title">Not sure what to ask? We'll help you describe it.</h3>
+    <p class="guided-intro">Answer a few simple questions. No dbt terminology needed. This builds a clear diagnostic request locally, without AI.</p>
+    <form id="guided-form">
+      <div class="guided-grid">
+        <div>
+          <label for="guided-problem">What are you noticing?</label>
+          <select id="guided-problem">
+            <option value="unknown">I'm not sure what the problem is</option>
+            <option value="execution">dbt command or model won't run</option>
+            <option value="test">A test failed</option>
+            <option value="duplicate">I see duplicate rows</option>
+            <option value="slow">A model takes too long</option>
+            <option value="missing">Rows or updates are missing</option>
+            <option value="snapshot">Snapshot history looks wrong</option>
+            <option value="schema">A column is missing or changed</option>
+            <option value="source">Source data looks old or missing</option>
+          </select>
+        </div>
+        <div>
+          <label for="guided-stage">When does it happen?</label>
+          <select id="guided-stage">
+            <option value="unsure">I'm not sure</option>
+            <option value="before">Before the model starts running</option>
+            <option value="during">While the model is running</option>
+            <option value="after">After it finishes, the result looks wrong</option>
+            <option value="test">When I run tests</option>
+          </select>
+        </div>
+        <div>
+          <label for="guided-level">Your experience</label>
+          <select id="guided-level">
+            <option value="beginner">I'm learning dbt</option>
+            <option value="project">I'm working on a project</option>
+            <option value="experienced">I'm experienced with dbt</option>
+          </select>
+        </div>
+        <div>
+          <label for="guided-details">Anything you can share? (optional)</label>
+          <input id="guided-details" maxlength="3000" placeholder="e.g. model name, what changed, short error">
+        </div>
+        <div class="wide actions">
+          <button class="btn primary" type="submit">Build my diagnostic request ↓</button>
+        </div>
+      </div>
+      <p class="hint">Please remove credentials, customer data, and company-sensitive information. Answers stay in this browser page.</p>
+    </form>
+  </section>
+
   <div class="layout">
     <section class="panel">
       <h3>Describe the problem</h3>
@@ -40,6 +90,8 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
         <label for="category">Problem category (optional)</label>
         <select id="category">
           <option value="auto">Auto-detect from the text</option>
+          <option value="execution">Model or dbt command will not run</option>
+          <option value="performance">Slow model / performance</option>
           <option value="compilation">Compilation / Jinja / macro</option>
           <option value="profile">Profile / configuration</option>
           <option value="dependency">Missing dependency / circular reference</option>
@@ -107,6 +159,8 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
 const $ = (id) => document.getElementById(id);
 const commonValidation = ["Reproduce the issue with the smallest affected model or test selection.", "Run the relevant dbt parse/test/build check in a safe environment.", "Compare the result with the expected row counts, keys, or schema before deploying."];
 const cases = {
+  execution:{title:"dbt command or model did not run",category:"Execution",diagnosis:"The command or model did not complete. The symptom alone does not identify whether the cause is parsing, configuration, permissions, SQL compilation, or a database/runtime error.",explanation:"The first actionable error and the stage where the run stopped are the most useful clues. The last line of a long log is often only a summary.",fix:["Find the first actionable error above the final failure summary.","Note the command you ran, the model/test selection, and whether failure happened before SQL execution or during execution.","Check the named file, model, profile, or database error without sharing credentials."],validation:["Run dbt parse if the failure happened before execution.","Run the smallest affected model or test selection in a safe environment.","Confirm the original error is gone and the output is correct."],prevention:"Keep parse and focused build/test checks in CI; capture the first actionable error in issue reports.",evidence:"User reports a dbt command/model did not run; root cause remains unconfirmed."},
+  performance:{title:"dbt model performance needs investigation",category:"Performance",diagnosis:"The model is slower than expected, but the cause cannot be determined from runtime alone.",explanation:"Possible contributors include query plan changes, larger input volumes, expensive joins, repeated scans, warehouse/resource limits, or materialization choices.",fix:["Compare recent runtime and input row counts with a known-good run.","Inspect compiled SQL and the database query profile for scans, joins, spills, and pruning.","Change one suspected bottleneck at a time; do not assume a warehouse-size change is the right fix."],validation:["Benchmark the same selection and comparable input volume before and after the change.","Check output row counts and data-quality tests as well as runtime."],prevention:"Track representative model runtimes and input volumes, and review query profiles for regressions.",evidence:"Slow runtime symptom detected; no query profile or volume evidence supplied."},
   compilation:{title:"dbt parsing or compilation failed",category:"Compilation",diagnosis:"dbt reported a parsing, Jinja, macro, or compilation failure; the exact cause needs the full error context.",explanation:"Possible causes include SQL syntax, Jinja expressions, macro resolution, project configuration, or invalid references. The headline alone does not distinguish these causes.",fix:["Use the first actionable error in the full log and inspect the named file and line.","Verify referenced macros, variables, model names, and source names before changing SQL.","Run dbt parse to isolate parsing/configuration problems."],validation:["Run dbt parse.","Run the smallest affected model selection and inspect compiled SQL if compilation succeeds.","Add a regression case for the specific failure."],prevention:"Keep representative parse/build checks in CI and test shared macro changes against dependent models.",evidence:"Compilation/Jinja/macro signal detected in the supplied text."},
   profile:{title:"Configured dbt profile was not found",category:"Configuration",diagnosis:"The profile referenced by the project could not be resolved.",explanation:"The profile name in dbt_project.yml must match a profile available to this dbt process.",fix:["Compare the project profile setting with profiles.yml.","Verify the active profile path, environment, and environment variables.","Do not paste credentials into this tool."],validation:["Run dbt debug in the same shell or job environment.","Retry dbt parse after the profile resolves."],prevention:"Document profile setup and validate environment variables in local runs and CI.",evidence:"Profile-not-found signal detected in the supplied text."},
   dependency:{title:"dbt model dependency could not be resolved",category:"Dependencies",diagnosis:"dbt reported a missing dependency or circular dependency.",explanation:"dbt builds a directed graph from ref and source relationships; missing targets or cycles prevent valid graph construction.",fix:["Check the referenced model/source name and whether it is enabled.","For a cycle, redesign dependencies so the graph is acyclic.","Check package installation if the referenced node comes from a package."],validation:["Run dbt parse and confirm graph validation succeeds.","Run the smallest affected model selection."],prevention:"Include dbt parse in CI and keep model references under version control.",evidence:"Missing dependency or circular-reference signal detected."},
@@ -131,6 +185,8 @@ function detect(text, selected) {
   if (selected !== "auto") return cases[selected] ? {key:selected, item:cases[selected]} : null;
   const t = normal(text);
   const has = (...terms) => terms.some(x => t.includes(x));
+  if (has("model is slow","model takes too long","slow model","query is slow","performance issue","runtime increased","taking too long")) return {key:"performance",item:cases.performance};
+  if (has("model will not run","model wont run","command failed","dbt command failed","did not start running","failed before execution","execution error")) return {key:"execution",item:cases.execution};
   if (has("could not find profile named","profile not found","profiles.yml","profile configuration")) return {key:"profile",item:cases.profile};
   if (has("circular dependency","depends on a node named","dependency error","missing dependency","ref('") || has('ref("')) return {key:"dependency",item:cases.dependency};
   if (has("accepted_values","accepted values test")) return {key:"accepted_values",item:cases.accepted_values};
@@ -148,6 +204,7 @@ function detect(text, selected) {
   if (has("unique_key","unique key","model grain","merge key")) return {key:"wrong_unique_key",item:cases.wrong_unique_key};
   if (has("missing updates","updates missing","not reflected","updated rows missing")) return {key:"missed_updates",item:cases.missed_updates};
   if (has("duplicate rows","duplicates after","duplicate records","duplicate data") && has("incremental","merge","dbt")) return {key:"duplicates",item:cases.duplicates};
+  if (has("model will not run","model wont run","dbt run failed","dbt build failed","command did not run")) return {key:"execution",item:cases.execution};
   if (has("compilation error","jinja error","undefined macro","macro not found","syntax error","compilation failed")) return {key:"compilation",item:cases.compilation};
   return null;
 }
@@ -176,6 +233,33 @@ $("diagnostic-form").addEventListener("submit", event=>{
 });
 $("clear").addEventListener("click",()=>{
   $("problem").value="";$("category").value="auto";$("result").style.display="none";$("problem").focus();
+});
+$("guided-form").addEventListener("submit", event=>{
+  event.preventDefault();
+  const type=$("guided-problem").value;
+  const stage=$("guided-stage").value;
+  const level=$("guided-level").value;
+  const extra=$("guided-details").value.trim();
+  const problemLabels={
+    unknown:"I am not sure how to classify the dbt problem",
+    execution:"The dbt command or model did not run",
+    test:"A dbt test failed",
+    duplicate:"I observed duplicate rows",
+    slow:"The model is slower than expected",
+    missing:"Rows or updates appear to be missing",
+    snapshot:"Snapshot history looks unexpected",
+    schema:"A column is missing or the schema changed",
+    source:"Source data appears old or missing"
+  };
+  const stageLabels={unsure:"I do not know which stage failed",before:"Before model SQL execution",during:"During model execution",after:"After execution, the result looked wrong",test:"While running tests"};
+  const levelLabels={beginner:"Beginner learning dbt",project:"Working on a dbt project",experienced:"Experienced dbt user"};
+  let details=problemLabels[type]+". Experience: "+levelLabels[level]+". When: "+stageLabels[stage]+".";
+  if(extra) details+=" Additional details: "+extra+".";
+  details+=" Please guide me with simple next checks and ask one focused question if evidence is missing. Do not assume an unverified root cause.";
+  $("problem").value=details;
+  const categoryMap={execution:"execution",test:"auto",duplicate:"duplicates",slow:"performance",missing:"auto",snapshot:"auto",schema:"auto",source:"auto",unknown:"auto"};
+  $("category").value=categoryMap[type]||"auto";
+  $("diagnostic-form").requestSubmit();
 });
 document.querySelectorAll("[data-example]").forEach(button=>button.addEventListener("click",()=>{
   $("problem").value=button.dataset.example;
