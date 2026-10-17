@@ -70,3 +70,57 @@ def test_incremental_duplicate_rule_requires_observed_evidence():
     assert "root cause is not confirmed" in finding.diagnosis
     assert "details.unique_key_configured=false" in finding.evidence
     assert any("compiled SQL" in step for step in finding.validation_steps)
+
+
+
+def test_incremental_missed_updates_requires_explicit_issue_evidence():
+    negative = engine.diagnose(DiagnosticInput(details={"incremental_issue": "maybe_missed_updates"}))
+    assert negative.findings == ()
+
+    result = engine.diagnose(DiagnosticInput(details={"incremental_issue": "missed_updates"}))
+    assert [f.rule_id for f in result.findings] == ["DBT-INCR-002"]
+    finding = result.findings[0]
+    assert "does not prove" in finding.explanation
+    assert any("compiled SQL" in step for step in finding.validation_steps)
+    assert finding.prevention
+
+
+def test_incremental_late_arriving_and_wrong_key_cases_are_distinct():
+    late = engine.diagnose(DiagnosticInput(details={"incremental_issue": "late_arriving_data"}))
+    wrong_key = engine.diagnose(DiagnosticInput(details={"incremental_issue": "wrong_unique_key"}))
+    assert late.findings[0].rule_id == "DBT-INCR-002"
+    assert "lookback window" in late.findings[0].recommended_fix
+    assert "grain" in wrong_key.findings[0].diagnosis
+
+
+def test_snapshot_rules_match_only_known_evidence_values():
+    assert engine.diagnose(DiagnosticInput(details={"snapshot_issue": "unknown"})).findings == ()
+
+    for issue in ("missing_unique_key", "updated_at_missing_or_null", "unexpected_history"):
+        result = engine.diagnose(DiagnosticInput(details={"snapshot_issue": issue}))
+        assert [f.rule_id for f in result.findings] == ["DBT-SNAP-001"]
+        finding = result.findings[0]
+        assert finding.evidence == (f"details.snapshot_issue={issue}",)
+        assert finding.recommended_fix and finding.validation_steps and finding.prevention
+
+
+def test_schema_evolution_rules_are_evidence_gated_and_actionable():
+    assert engine.diagnose(DiagnosticInput(message="column was added yesterday")).findings == ()
+
+    for change in ("added_column", "removed_or_renamed_column", "contract_mismatch"):
+        result = engine.diagnose(DiagnosticInput(details={"schema_change": change}))
+        assert [f.rule_id for f in result.findings] == ["DBT-SCHEMA-001"]
+        finding = result.findings[0]
+        assert finding.evidence == (f"details.schema_change={change}",)
+        assert finding.recommended_fix and finding.validation_steps and finding.prevention
+
+
+def test_unknown_incremental_snapshot_and_schema_values_do_not_guess():
+    for details in (
+        {"incremental_issue": "random"},
+        {"snapshot_issue": "random"},
+        {"schema_change": "random"},
+    ):
+        result = engine.diagnose(DiagnosticInput(details=details))
+        assert result.findings == ()
+        assert result.needs_more_evidence is True
