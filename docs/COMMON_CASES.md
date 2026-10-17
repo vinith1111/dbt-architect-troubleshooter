@@ -14,11 +14,11 @@ If evidence is missing or ambiguous, ask for more diagnostic evidence instead of
 |---|---|---|
 | Project setup | Missing dbt_project.yml | Implemented with project-root confirmation |
 | Configuration | Profile name not found | Implemented |
-| Parsing/compilation | Invalid Jinja, YAML, SQL syntax, missing macro | Planned |
+| Parsing/compilation | Compilation/Jinja/macro-related failure signal | Implemented as general guidance; exact cause still needs evidence |
 | Dependencies | Missing ref/source target or circular dependency | Initial signal-based rule implemented |
-| Data quality | unique, not_null, relationships, accepted_values failures | Implemented as general guidance |
-| Sources | Source missing or freshness failure | Planned |
-| Incremental models | Duplicate rows, wrong unique_key, missed updates, late-arriving data | Planned |
+| Data quality | unique, not_null, relationships, accepted_values failures | Implemented as general guidance |\n| Sources | Source freshness failure | Implemented as general guidance |\n| Incremental models | Duplicate rows observed | Implemented as evidence-gated diagnostic; root cause not auto-assumed |
+| Sources | Source missing | Planned |
+| Incremental models | Wrong unique_key, missed updates, late-arriving data | Planned |
 | Snapshots | Unique-key, strategy, updated_at, unexpected history | Planned |
 | Schema evolution | Added, removed, renamed columns and contract mismatch | Planned |
 | Packages/macros | Package resolution/version and macro compilation | Planned |
