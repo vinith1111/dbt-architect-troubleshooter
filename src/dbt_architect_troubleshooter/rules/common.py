@@ -73,4 +73,66 @@ def generic_test_failure(data: DiagnosticInput) -> DiagnosticFinding | None:
     )
 
 
-COMMON_RULES = (missing_project_file, profile_not_found, dependency_error, generic_test_failure)
+
+
+
+def compilation_error(data: DiagnosticInput) -> DiagnosticFinding | None:
+    message = data.message.lower()
+    if data.error_code != "COMPILATION_ERROR" and not any(
+        signal in message for signal in (
+            "compilation error",
+            "jinja error",
+            "undefined macro",
+            "macro not found",
+        )
+    ):
+        return None
+    return _finding(
+        "DBT-COMPILE-001", "dbt parsing or compilation failed", "compilation",
+        "dbt reported a parsing, Jinja, or compilation failure; the exact cause needs the full error context.",
+        "Compilation failures can originate from SQL syntax, Jinja expressions, macro resolution, project configuration, or invalid references. The headline alone does not distinguish these causes.",
+        "Use the first actionable error in the full log, inspect the named file and line, and verify referenced macros, variables, and model/source names before changing SQL.",
+        ("Run dbt parse to isolate project/Jinja parsing issues.", "Run the smallest affected model selection and inspect compiled SQL when compilation succeeds.", "Add a regression case for the specific failure."),
+        "Keep representative dbt parse/build checks in CI and test shared macro changes against dependent models.",
+        (f"error_code={data.error_code}" if data.error_code else f"message contains compilation signal: {data.message}",),
+    )
+
+
+def source_freshness_failure(data: DiagnosticInput) -> DiagnosticFinding | None:
+    message = data.message.lower()
+    if data.error_code != "SOURCE_FRESHNESS_FAILED" and not any(
+        signal in message for signal in ("source freshness", "source is stale", "freshness check")
+    ):
+        return None
+    return _finding(
+        "DBT-SOURCE-001", "dbt source freshness check failed", "sources",
+        "The configured freshness threshold was exceeded or the freshness check reported a failure.",
+        "Freshness compares a configured source timestamp with the allowed age. This indicates stale or unverified input, not necessarily a failed downstream transformation.",
+        "Inspect the source's configured loaded-at field and freshness thresholds, verify the upstream load completed, and check timezone/timestamp semantics before changing thresholds.",
+        ("Run the relevant source freshness command again after verifying the upstream load.", "Inspect the source's loaded-at timestamp and configured warn_after/error_after values."),
+        "Monitor upstream ingestion and alert on late loads; keep freshness thresholds aligned with the source's real delivery contract.",
+        (f"error_code={data.error_code}" if data.error_code else f"message contains freshness signal: {data.message}",),
+    )
+
+
+def incremental_duplicates(data: DiagnosticInput) -> DiagnosticFinding | None:
+    if data.details.get("duplicate_rows_observed") is not True:
+        return None
+    evidence = ["details.duplicate_rows_observed=true"]
+    unique_key_configured = data.details.get("unique_key_configured")
+    if unique_key_configured is True:
+        evidence.append("details.unique_key_configured=true")
+    elif unique_key_configured is False:
+        evidence.append("details.unique_key_configured=false")
+    return _finding(
+        "DBT-INCR-001", "Duplicate rows observed in an incremental model", "incremental",
+        "Duplicate rows were explicitly reported, but the root cause is not confirmed by the symptom alone.",
+        "Common causes include an incorrect or missing unique_key, source duplicates, a merge key that does not match the model grain, or an incremental predicate that excludes existing rows. The correct cause depends on the model SQL, adapter strategy, and duplicate-key evidence.",
+        "Compare the model's intended grain with unique_key, inspect duplicate source keys and compiled incremental SQL, then validate the adapter's incremental strategy. Do not add a key or run a full refresh blindly without checking semantics and data impact.",
+        ("Capture duplicate key values and counts before changing the model.", "Inspect compiled SQL and the configured incremental strategy/unique_key.", "Run targeted uniqueness tests and compare row counts after a controlled validation run."),
+        "Document model grain, test the intended unique key, and keep a regression fixture for repeated incremental runs.",
+        tuple(evidence),
+    )
+
+
+COMMON_RULES = (missing_project_file, profile_not_found, dependency_error, generic_test_failure, compilation_error, source_freshness_failure, incremental_duplicates)
