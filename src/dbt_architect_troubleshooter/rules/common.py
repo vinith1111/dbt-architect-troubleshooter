@@ -135,4 +135,110 @@ def incremental_duplicates(data: DiagnosticInput) -> DiagnosticFinding | None:
     )
 
 
-COMMON_RULES = (missing_project_file, profile_not_found, dependency_error, generic_test_failure, compilation_error, source_freshness_failure, incremental_duplicates)
+
+def incremental_behavior_issue(data: DiagnosticInput) -> DiagnosticFinding | None:
+    issue = data.details.get("incremental_issue")
+    cases = {
+        "missed_updates": (
+            "Incremental run may be missing updates",
+            "Evidence indicates expected updates were not reflected by an incremental run; the exact mechanism is not yet established.",
+            "Inspect the incremental filter's time/key boundary, unique_key, strategy, and compiled SQL. Confirm whether updated source rows fall outside the selected window before changing predicates.",
+            "Compare a bounded full-source result with the incremental result and test rows updated at the boundary.",
+        ),
+        "late_arriving_data": (
+            "Late-arriving records may be excluded",
+            "Evidence indicates late-arriving records are not present after an incremental run; the exact cause is not confirmed.",
+            "Check the incremental lookback window, event time versus ingestion time, and source arrival delay. Expand the lookback only after measuring the source's lateness and duplicate impact.",
+            "Add boundary fixtures for records arriving late and verify repeated incremental runs remain idempotent.",
+        ),
+        "wrong_unique_key": (
+            "Incremental unique_key may not match model grain",
+            "The supplied evidence says the configured unique_key does not represent the intended model grain; validate the grain and adapter behavior before changing it.",
+            "Document the intended row grain, compare it with unique_key columns and null/duplicate behavior, then inspect compiled merge SQL for the active adapter.",
+            "Add grain-level uniqueness tests and regression fixtures with multiple rows per business entity.",
+        ),
+    }
+    if issue not in cases:
+        return None
+    title, diagnosis, fix, prevention = cases[issue]
+    return _finding(
+        "DBT-INCR-002", title, "incremental", diagnosis,
+        "Incremental models process a subset of source data. Filters, key definitions, and adapter strategies can affect whether updates and late records are captured; the issue label alone does not prove a single root cause.",
+        fix,
+        ("Capture the model configuration and compiled SQL for the failing run.", "Compare source rows, incremental selection, and target rows for a small reproducible time/key window.", "Rerun a controlled test and check for missing rows and duplicates."),
+        prevention,
+        (f"details.incremental_issue={issue}",),
+    )
+
+
+def snapshot_issue(data: DiagnosticInput) -> DiagnosticFinding | None:
+    issue = data.details.get("snapshot_issue")
+    cases = {
+        "missing_unique_key": (
+            "Snapshot unique key is missing or invalid",
+            "The supplied evidence identifies a missing or invalid snapshot unique key; the affected source grain still needs verification.",
+            "Choose a stable, non-null key that uniquely identifies one source entity and validate it against the snapshot input before rerunning the snapshot.",
+            "Test snapshot input key uniqueness and non-nullness before snapshot execution.",
+        ),
+        "updated_at_missing_or_null": (
+            "Snapshot updated_at value is missing or null",
+            "The snapshot strategy depends on an updated_at value, but evidence indicates the configured value is unavailable or null.",
+            "Verify the configured updated_at column exists, is populated, and changes reliably when source rows change. Do not substitute a different column without validating semantics.",
+            "Add source-level checks for the updated_at column and test a changed-row scenario.",
+        ),
+        "unexpected_history": (
+            "Snapshot history differs from expectations",
+            "Unexpected historical versions were observed; this does not by itself distinguish source changes, key instability, timestamp behavior, or snapshot configuration.",
+            "Inspect the entity key, strategy, updated_at/check columns, and the affected rows' validity timestamps. Compare source changes with snapshot history before modifying or deleting history.",
+            "Keep a small fixture covering unchanged rows, changed rows, and repeated snapshot runs.",
+        ),
+    }
+    if issue not in cases:
+        return None
+    title, diagnosis, fix, prevention = cases[issue]
+    return _finding(
+        "DBT-SNAP-001", title, "snapshots", diagnosis,
+        "Snapshot behavior depends on a stable entity key and the selected timestamp- or check-based strategy. The structured issue label is evidence to investigate, not proof of every underlying cause.",
+        fix,
+        ("Inspect the snapshot configuration and the relevant source rows.", "Run a controlled snapshot against representative unchanged and changed entities.", "Verify validity timestamps and history before considering any repair."),
+        prevention,
+        (f"details.snapshot_issue={issue}",),
+    )
+
+
+def schema_evolution_issue(data: DiagnosticInput) -> DiagnosticFinding | None:
+    change = data.details.get("schema_change")
+    cases = {
+        "added_column": (
+            "A new source column may not be propagated",
+            "Evidence indicates a source column was added but is not present downstream; propagation depends on model SQL and materialization behavior.",
+            "Compare source schema, model select list, materialization, and adapter-specific schema-change settings. Add the column explicitly where required and validate existing target data.",
+            "Test source schema changes in a non-production target and document the intended column propagation policy.",
+        ),
+        "removed_or_renamed_column": (
+            "A removed or renamed column may break downstream models",
+            "Evidence indicates a referenced column was removed or renamed; downstream dependencies must be checked before changing models.",
+            "Identify all references to the old column, confirm whether this is a rename or removal, and update dependent models in a coordinated change. Avoid assuming a rename is equivalent to a drop-and-add.",
+            "Track schema contracts and run parse/build tests for downstream dependents when source schemas change.",
+        ),
+        "contract_mismatch": (
+            "Model contract does not match the produced schema",
+            "The supplied evidence indicates a mismatch between the declared contract and the model's produced columns or types.",
+            "Compare contract column names and types with the compiled model output, correct the model or contract according to the intended interface, then validate the adapter's enforcement behavior.",
+            "Keep contract checks in CI and review schema changes as interface changes.",
+        ),
+    }
+    if change not in cases:
+        return None
+    title, diagnosis, fix, prevention = cases[change]
+    return _finding(
+        "DBT-SCHEMA-001", title, "schema_evolution", diagnosis,
+        "Schema changes can affect model SQL, materializations, downstream references, and enforced contracts differently. This rule only runs when a recognized schema-change signal is explicitly supplied.",
+        fix,
+        ("Compare the source schema with the model's compiled output and target schema.", "Inspect dependent models and configured schema-change/contract behavior.", "Run parse and focused tests/builds in a safe target before deployment."),
+        prevention,
+        (f"details.schema_change={change}",),
+    )
+
+
+COMMON_RULES = (missing_project_file, profile_not_found, dependency_error, generic_test_failure, compilation_error, source_freshness_failure, incremental_duplicates, incremental_behavior_issue, snapshot_issue, schema_evolution_issue)
