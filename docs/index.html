@@ -188,7 +188,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
       <div class="chat-message"><h4>Try this first</h4><ol id="fix"></ol></div>
       <div class="chat-message full"><h4>Why I'm suggesting this</h4><p id="explanation"></p></div>
     </div>
-    <div id="followup" class="notice chat-next" style="display:none"></div>
+    <div id="followup" class="notice chat-next" style="display:none"><p id="followup-question"></p><a class="home-secondary" href="#problem">Add what I found ↓</a></div>
     <details class="technical-details">
       <summary>Show detailed checks (for project work)</summary>
       <div class="result-grid">
@@ -274,7 +274,7 @@ function render(item, text, matched, ruleKey) {
   $("prevention").textContent=item ? item.prevention : "After the cause is confirmed, add a focused test or regression example so the same issue is easier to catch next time.";
   $("evidence").textContent=item ? item.evidence : "No recognized rule signal found. Your text stays in this browser and is not sent to a server.";
   $("followup").style.display="block";
-  $("followup").textContent=item ? "One question to narrow it down: can you check the first step above and share what you observe? If you know the exact error or have one example row/key, add it to the problem box, set Problem category back to Auto-detect, and run Diagnose again. I'll use the rule set to look for a more specific signal." : "One question to start: what is the first actual error shown in the log, or what is one concrete example of the wrong result? Add that detail to the problem box, leave Problem category on Auto-detect, and run Diagnose again.";
+  $("followup-question").textContent=item ? "One question to narrow it down: can you check the first step above and share what you observe? If you know the exact error or have one example row/key, add it to the problem box, set Problem category back to Auto-detect, and run Diagnose again. I'll use the rule set to look for a more specific signal." : "One question to start: what is the first actual error shown in the log, or what is one concrete example of the wrong result? Add that detail to the problem box, leave Problem category on Auto-detect, and run Diagnose again.";
   $("result").scrollIntoView({behavior:"smooth",block:"start"});
 }
 $("diagnostic-form").addEventListener("submit", event=>{
