@@ -32,7 +32,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
 <main>
   <header class="brand">
     <div class="mark" aria-hidden="true">db</div>
-    <div><div class="eyebrow">Simple Tinglish explanations · No AI</div><h1>dbt Architect Troubleshooter</h1></div>
+    <div><div class="eyebrow">Simple Tinglish explanations · AI ledu</div><h1>dbt Architect Troubleshooter</h1></div>
   </header>
   <section class="hero">
     <h2>Error ni paste cheyyi.<br><span>Next em check cheyyalo telusuko.</span></h2>
@@ -42,14 +42,14 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
       <a class="home-secondary" href="./learn.html">dbt kothaga nerchukuntunnava? Guided project start cheyyi <span aria-hidden="true">→</span></a>
     </div>
     <details class="more-learning">
-      <summary>Anni learning paths & interview practice chudu</summary>
+      <summary>dbt, SQL, Snowflake, Python lessons & interview practice chudu</summary>
       <nav class="learning-links" aria-label="Learning and practice">
-        <a href="./sql-learn.html"><strong>Data Engineering kosam SQL</strong><span>Queries, joins, incremental DML, data quality ni examples tho nerchuko</span></a>
-        <a href="./snowflake-learn.html"><strong>Snowflake</strong><span>Data loading, performance, security, pipelines ni easy ga nerchuko</span></a>
-        <a href="./python-learn.html"><strong>Python for Data Engineering</strong><span>Python concepts ni simple examples tho practice cheyyi</span></a>
-        <a href="./aws-learn.html"><strong>AWS for Data Engineering</strong><span>S3, IAM, Glue and monitoring</span></a>
+        <a href="./sql-learn.html"><strong>SQL: Data Engineering kosam</strong><span>Queries, joins, incremental DML, data quality ni examples tho nerchuko</span></a>
+        <a href="./snowflake-learn.html"><strong>Snowflake</strong><span>Data loading, performance, security, pipelines ni simple Tinglish lo nerchuko</span></a>
+        <a href="./python-learn.html"><strong>Python for Data Engineering</strong><span>Python concepts ni simple Tinglish examples tho practice cheyyi</span></a>
+        <a href="./aws-learn.html"><strong>AWS for Data Engineering</strong><span>S3, IAM, Glue, monitoring gurinchi nerchuko</span></a>
         <a href="./real-world-scenarios.html"><strong>Real-world scenarios</strong><span>Practice production issues and recovery</span></a>
-        <a href="./enterprise-interview-lab.html"><strong>Enterprise interview lab</strong><span>Interview questions, worked examples and follow-ups</span></a>
+        <a href="./enterprise-interview-lab.html"><strong>Enterprise interview lab</strong><span>Interview questions, sample answers, follow-up questions</span></a>
       </nav>
     </details>
   </section>
@@ -100,7 +100,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
           <button class="btn primary" type="submit">Problem details prepare cheyyi ↓</button>
         </div>
       </div>
-      <p class="hint">Please remove credentials, customer data, and company-sensitive information. Answers stay in this browser page.</p>
+      <p class="hint">Passwords, tokens, customer data, company-sensitive details paste cheyyaku. Nee answers ee browser page lone untayi.</p>
     </form>
   </section>
 
@@ -113,7 +113,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
       <div class="wide"><label for="scenario-select">Practice kosam scenario select cheyyi</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
       <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>Munduga em check chesthav?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="First troubleshooting step select cheyyi"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Naa answer check cheyyi</button><button id="scenario-reset" class="btn secondary" type="button">Malli try cheyyi</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next em check cheyyali</strong><ol id="scenario-next"></ol><p><strong>Fix ayindo confirm cheyyi:</strong> <span id="scenario-validate"></span></p><p><strong>Malli repeat kakunda:</strong> <span id="scenario-prevent"></span></p></div></div>
     </div>
-    <p class="hint">Ivi practice examples matrame, nee project gurinchi claims kaadu. Fixed examples/rules browser lone run avuthayi.</p>
+    <p class="hint">Ivi practice examples matrame, nee project gurinchi actual claims kaadu. Fixed examples/rules browser lone run avuthayi.</p>
   </section>
 
   <div class="layout">
@@ -267,7 +267,7 @@ function render(item, text, matched, ruleKey) {
   $("result-summary").textContent=item ? "I found a rule that matches part of what you described. It points us toward a place to investigate, not a confirmed root cause." : "I don't have enough matching evidence yet, so I won't guess. Let's collect one clearer clue."; 
   const plainSummary={execution:"dbt command complete avvakunda stop ayyindi. Enduku jarigindo telusukovadaniki first actual error find cheyyali.",performance:"Model usual kanna ekkuva time teesukuntundi. Changes cheyyakamundu normal run tho ee run ni compare cheddam.",test_failure:"Test rule ki match kaani data dorikindi. SQL change cheyyadam leda test ni weak cheyyadam mundu fail ayina rows chuddam.",missing_data:"Expected data lo konni missing unnayi. Source nunchi model varaku oka example ni trace cheddam.",schema_change:"Column/table structure change ayyindi. Source lo em undo, model em expect chestundo compare cheddam.",source_data:"Source data late ga vachundo leda missing undo check cheyyali. Mundhu upstream load complete ayyindo verify cheyyi.",compilation:"dbt project lo oka part ni parse/compile cheyyalekapoyindi. First error usually ye file/macro check cheyyalo clue istundi.",profile:"dbt could not find the profile it was configured to use. Let's compare the configured profile name with the one available to this run.",dependency:"dbt could not resolve a model dependency, or it found a circular reference. Let's check the referenced model names and dependency path.",unique:"Test chesina column lo repeated values unnayi. Em change cheyyakamundu aa column unique ga undala ani confirm cheyyi.",not_null:"A column that is expected to have a value contains NULLs. Let's inspect the affected rows and the upstream logic.",relationships:"Konni values ki matching parent record ledu. Aa keys ni chusi parent data vachindo verify cheddam.",accepted_values:"Column lo approved list lo leni values unnayi. Data wrong aa, allowed list wrong aa confirm cheyyali.",freshness:"Source freshness check prakaram data expected kanna old ga undochu. Latest load timestamp verify cheyyi.",duplicates:"Incremental model repeated rows add chestunnattu undi. Oka duplicate key ni, existing rows tho model ela match chestundo inspect cheddam.",missed_updates:"Incremental run existing record changes ni skip chesi undochu. Oka changed record ni filter nunchi target varaku trace cheddam.",late_arriving_data:"Konni records model time window taruvatha arrive avuthunnayi emo. Event time ni arrival time tho compare cheddam.",wrong_unique_key:"Incremental rows match cheyyadaniki use chesina key, each row ni correct ga identify cheyyakapovachu. Mundhu model row grain confirm cheyyi.",snapshot_key:"Snapshot ki prathi source record kosam stable key kavali. Configure chesina key unda, unique ga unda check cheyyi.",snapshot_updated_at:"Snapshot update timestamp missing/empty ga undochu. Configure chesina column and values verify cheyyi.",snapshot_history:"Snapshot history expected laga ledu. Oka entity source changes ni history tho compare cheddam.",schema_added:"New source column model SQL lo exclude ayi undochu. Model output columns ni explicit ga list chestunda check cheyyi.",schema_removed:"Column rename/remove ayyundachu. Old name ekkada inka use avutundo find cheyyi.",contract:"Model output, declared schema contract tho match avvatledu. Expected and actual column names/types compare cheddam."};
   $("diagnosis").textContent=item ? (plainSummary[ruleKey] || item.diagnosis) : "Problem jarigindani ardham ayyindi, kani ee description multiple dbt issues ki match avvachu. First actual error leda wrong output ki oka example isthe narrow down cheddam.";
-  $("explanation").textContent=item ? item.explanation : "The tool only recognizes specific text patterns. The first useful clue is usually the first error above the final failure summary, or one example row/key that is missing or duplicated.";
+  $("explanation").textContent=item ? item.explanation : "Tool konni known error patterns ni matrame identify chestundi. Final failure message ki mundhu unna first error chudu. Leda missing/duplicate ayina oka row/key example ivvu.";
   const tinglishFirstStep={
     execution:"Terminal lo first actual error find cheyyi. Last line matrame kaakunda daniki mundhu unna error kuda chudu.",
     performance:"Normal run tho slow run ni compare cheyyi. Query Profile lo scans, joins, spills, warehouse usage check cheyyi.",
