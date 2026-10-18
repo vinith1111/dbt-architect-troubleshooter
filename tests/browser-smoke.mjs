@@ -42,12 +42,14 @@ try {
 
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
+  await page.locator("#problem").fill("An unusual dbt behavior that does not match any known rule");
   await page.getByRole("button", { name: /Diagnose problem/i }).click();
   assert.match(await page.locator("#result-title").innerText(), /Let's narrow down the problem together/i);
   assert.match(await page.locator("#diagnosis").textContent(), /The problem is clear/i);
 
   // A known symptom should route to its matching deterministic guidance.
   await page.locator("#guided-problem").selectOption("duplicate");
+  await page.locator("#problem").fill("Duplicate rows in an incremental dbt model");
   await page.getByRole("button", { name: /Diagnose problem/i }).click();
   assert.match(await page.locator("#result-title").innerText(), /Duplicate rows in an incremental model/i);
 
