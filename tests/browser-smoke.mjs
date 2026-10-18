@@ -12,7 +12,9 @@ try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(pageUrl);
-  await page.getByRole("heading", { name: /Learn to troubleshoot with realistic dbt scenarios/i }).waitFor();
+  // The learning and guided tools are intentionally collapsed by default.
+  await page.locator("details.more-learning > summary").click();
+  await page.getByRole("heading", { name: /Real project dbt problems ni practice cheddam/i }).waitFor();
 
   const cases = [
     { value: "duplicates", correctIndex: 1 },
@@ -27,27 +29,27 @@ try {
     const options = page.locator('input[name="scenario-choice"]');
     assert.equal(await options.count(), 3, `${item.value}: expected 3 answer options`);
     await options.nth(item.correctIndex).check();
-    await page.getByRole("button", { name: "Check my reasoning" }).click();
+    await page.locator("#scenario-check").click();
     await page.locator("#scenario-feedback").waitFor({ state: "visible" });
     assert.match(await page.locator("#scenario-feedback-title").innerText(), /Good first check/i, `${item.value}: expected correct-answer feedback`);
     assert.equal(await page.locator("#scenario-next li").count(), 4, `${item.value}: expected 4 next checks`);
     assert.ok((await page.locator("#scenario-validate").innerText()).length > 10);
     assert.ok((await page.locator("#scenario-prevent").innerText()).length > 10);
-    await page.getByRole("button", { name: "Try again" }).click();
+    await page.locator("#scenario-reset").click();
     assert.equal(await page.locator("#scenario-feedback").isVisible(), false, `${item.value}: feedback should reset`);
     assert.equal(await page.locator('input[name="scenario-choice"]:checked').count(), 0, `${item.value}: selection should reset`);
   }
 
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
-  await page.getByRole("button", { name: /Build my diagnostic request/i }).click();
-  assert.match(await page.locator("#result-status").innerText(), /needs investigation/i);
-  assert.match(await page.locator("#diagnosis").innerText(), /can't safely identify a root cause/i);
+  await page.getByRole("button", { name: /Problem details prepare cheyyi/i }).click();
+  assert.match(await page.locator("#result-title").innerText(), /Problem ni kalisi narrow down cheddam/i);
+  assert.match(await page.locator("#diagnosis").innerText(), /Problem jarigindani ardham ayyindi/i);
 
   // A known symptom should route to its matching deterministic guidance.
   await page.locator("#guided-problem").selectOption("duplicate");
-  await page.getByRole("button", { name: /Build my diagnostic request/i }).click();
-  assert.match(await page.locator("#result-title").innerText(), /Duplicate rows observed/i);
+  await page.getByRole("button", { name: /Problem details prepare cheyyi/i }).click();
+  assert.match(await page.locator("#result-title").innerText(), /Incremental model lo duplicate rows/i);
 
   // Check narrow mobile layout for horizontal overflow.
   await page.setViewportSize({ width: 375, height: 812 });
