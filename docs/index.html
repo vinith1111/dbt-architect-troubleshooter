@@ -36,9 +36,9 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
   </header>
   <section class="hero">
     <h2>Paste the error message.<br><span>Find the next thing to check.</span></h2>
-    <p>Describe your dbt problem. Possible reason, safe next step, fix ayindo verify doing, again repeat kakunda chese checks anni simple English lo you will see. Evidence lekapothe guess cheyyam.</p>
+    <p>Describe your dbt problem. Get a possible cause, a safe next step, a way to verify the fix, and checks to prevent recurrence. We do not guess when evidence is missing.</p>
     <div class="home-actions">
-      <a class="home-primary" href="#diagnostic-form">dbt problem ni check do <span aria-hidden="true">↓</span></a>
+      <a class="home-primary" href="#diagnostic-form">Check a dbt problem <span aria-hidden="true">↓</span></a>
       <a class="home-secondary" href="./learn.html">dbt kothaga are you learning? Guided project start do <span aria-hidden="true">→</span></a>
     </div>
     <details class="more-learning">
@@ -57,7 +57,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
   <section class="panel guided" aria-labelledby="guided-title">
     <span class="guided-tag">Not sure where to start? Start here</span>
     <h3 id="guided-title">Not sure what the problem is? Identify it first.</h3>
-    <p class="guided-intro">Konni simple questions ki answer ivvu. dbt technical words teliyakapoina parledhu. Ee details with diagnostic request browser only prepare happens. AI use cheyyam.</p>
+    <p class="guided-intro">Answer a few simple questions. You do not need to know dbt terminology. The page prepares a diagnostic request in your browser. No AI is used.</p>
     <form id="guided-form">
       <div class="guided-grid">
         <div>
@@ -100,7 +100,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
           <button class="btn primary" type="submit">Prepare problem details ↓</button>
         </div>
       </div>
-      <p class="hint">Passwords, tokens, customer data, company-sensitive details paste cheyyaku. Nee answers ee browser page only are.</p>
+      <p class="hint">Do not paste passwords, tokens, customer data, or company-sensitive information. Your answers stay in this browser.</p>
     </form>
   </section>
 
@@ -108,18 +108,18 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
   <section class="panel learning" aria-labelledby="learning-title">
     <span class="guided-tag">Practice mode · No AI</span>
     <h3 id="learning-title">Practice real-world dbt problems</h3>
-    <p class="guided-intro">Production experience required is missing. Oka scenario select and, first em check chesthavo choose do. Tarvatha evidence-based explanation with compare do.</p>
+    <p class="guided-intro">Production experience is not required. Select a scenario, choose what you would check first, then review the evidence-based explanation.</p>
     <div class="learning-grid">
       <div class="wide"><label for="scenario-select">Practice for scenario select do</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
-      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>What would you check first?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="First troubleshooting step select do"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Check my answer</button><button id="scenario-reset" class="btn secondary" type="button">Try again</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next em check should</strong><ol id="scenario-next"></ol><p><strong>Fix ayindo confirm do:</strong> <span id="scenario-validate"></span></p><p><strong>Malli repeat kakunda:</strong> <span id="scenario-prevent"></span></p></div></div>
+      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>What would you check first?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="First troubleshooting step select do"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Check my answer</button><button id="scenario-reset" class="btn secondary" type="button">Try again</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next checks</strong><ol id="scenario-next"></ol><p><strong>Fix ayindo confirm do:</strong> <span id="scenario-validate"></span></p><p><strong>Prevent recurrence:</strong> <span id="scenario-prevent"></span></p></div></div>
     </div>
-    <p class="hint">Ivi practice examples matrame, your project gurinchi actual claims is not. Fixed examples/rules browser only run avuthayi.</p>
+    <p class="hint">These are practice examples, not claims about your project. Fixed examples and rules run only in your browser.</p>
   </section>
 
   <div class="layout">
     <section class="panel">
       <h3>Describe the problem in simple terms</h3>
-      <p class="sub">Error message paste do leda em what happened simple ga cheppu.</p>
+      <p class="sub">Paste the error message or briefly describe what happened.</p>
       <form id="diagnostic-form">
         <label for="problem">Error message / problem details</label>
         <textarea id="problem" required maxlength="12000" placeholder="Example: Database Error in model orders: duplicate rows after an incremental run..."></textarea>
@@ -165,16 +165,16 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     </section>
 
     <aside class="panel side">
-      <div class="side-title"><span class="dot"></span><h3>Neeku em dorukutundi</h3></div>
+      <div class="side-title"><span class="dot"></span><h3>What you will get</h3></div>
       <span class="pill">Mundhu evidence check</span>
       <ul>
-        <li><strong>Diagnosis:</strong> Nee error lo kanipinchina clue based on possible reason cheptham.</li>
-        <li><strong>Explanation:</strong> Error because of em understand avuthundo, em confirm kaado simple ga cheptham.</li>
-        <li><strong>Next step:</strong> Mundhu em check cheyyalo cheptham. Production lo automatic changes cheyyam.</li>
-        <li><strong>Verify:</strong> Problem fix ayyindo ela confirm cheyyalo cheptham.</li>
-        <li><strong>Prevention:</strong> Ee problem again repeat kakunda em cheyyalo cheptham.</li>
+        <li><strong>Diagnosis:</strong> A possible cause based on clues in your error.</li>
+        <li><strong>Explanation:</strong> A simple explanation of what the error suggests and what remains unconfirmed.</li>
+        <li><strong>Next step:</strong> The first checks to perform. No automatic production changes are made.</li>
+        <li><strong>Verify:</strong> How to verify whether the problem is fixed.</li>
+        <li><strong>Prevention:</strong> How to prevent the problem from recurring.</li>
       </ul>
-      <div class="notice">Ee tool browser lo unna fixed rules with work happens. Nee text server ki pampadu, AI use cheyyadu, Snowflake ki connect will not happen, dbt commands run cheyyadu.</div>
+      <div class="notice">This tool uses fixed rules in your browser. Your text is not sent to a server. It does not use AI, connect to Snowflake, or run dbt commands.</div>
     </aside>
   </div>
 
@@ -192,10 +192,10 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     <details class="technical-details">
       <summary>Inka detailed checks kavala? Ikkada check</summary>
       <div class="result-grid">
-        <div class="result-block"><h4>Tarvatha cheyyalsina checks</h4><ol id="more-fix"></ol></div>
-        <div class="result-block"><h4>Fix ayyindo ela confirm should</h4><ol id="validation"></ol></div>
-        <div class="result-block"><h4>Malli repeat kakunda ela chuskovali</h4><p id="prevention"></p></div>
-        <div class="result-block"><h4>Ee rule match avvadaniki use ayina evidence</h4><p id="evidence" class="evidence"></p></div>
+        <div class="result-block"><h4>Next checks</h4><ol id="more-fix"></ol></div>
+        <div class="result-block"><h4>How to verify the fix</h4><ol id="validation"></ol></div>
+        <div class="result-block"><h4>How to prevent recurrence</h4><p id="prevention"></p></div>
+        <div class="result-block"><h4>Evidence used to match this rule</h4><p id="evidence" class="evidence"></p></div>
       </div>
     </details>
     <p class="hint">This tool uses fixed local rules, not AI. Treat this as a starting point, not proof of root cause. No text is sent to a server.</p>
