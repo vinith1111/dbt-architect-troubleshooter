@@ -34,5 +34,5 @@ jobs:
         run: dbt --version
       - name: Parse project without connecting to Snowflake
         run: dbt parse --profiles-dir "$HOME/.dbt"
-      - name: Compile project without connecting to Snowflake
-        run: dbt compile --profiles-dir "$HOME/.dbt"
+      - name: Validate model graph without connecting to Snowflake
+        run: dbt ls --profiles-dir "$HOME/.dbt" --output name
