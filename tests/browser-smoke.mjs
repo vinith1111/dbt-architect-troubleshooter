@@ -12,7 +12,9 @@ try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(pageUrl);
-  await page.getByRole("heading", { name: /Learn to troubleshoot with realistic dbt scenarios/i }).waitFor();
+  // The learning and guided tools are intentionally collapsed by default.
+  await page.locator("details.more-learning > summary").click();
+  await page.getByRole("heading", { name: /Real project dbt problems ni practice cheddam/i }).waitFor();
 
   const cases = [
     { value: "duplicates", correctIndex: 1 },
@@ -37,6 +39,9 @@ try {
     assert.equal(await page.locator("#scenario-feedback").isVisible(), false, `${item.value}: feedback should reset`);
     assert.equal(await page.locator('input[name="scenario-choice"]:checked').count(), 0, `${item.value}: selection should reset`);
   }
+
+  // Expand the guided diagnosis tool before interacting with it.
+  await page.locator("details.guided > summary").click();
 
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
