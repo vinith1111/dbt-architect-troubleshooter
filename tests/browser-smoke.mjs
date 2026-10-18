@@ -42,13 +42,13 @@ try {
 
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
-  await page.getByRole("button", { name: /Prepare problem details/i }).click();
-  assert.match(await page.locator("#result-title").innerText(), /Let's narrow down the problem/i);
-  assert.match(await page.locator("#diagnosis").innerText(), /I understand the problem you encountered/i);
+  await page.getByRole("button", { name: /Diagnose problem/i }).click();
+  assert.match(await page.locator("#result-title").innerText(), /Let's narrow down the problem together/i);
+  assert.match(await page.locator("#diagnosis").innerText(), /The problem is clear/i);
 
   // A known symptom should route to its matching deterministic guidance.
   await page.locator("#guided-problem").selectOption("duplicate");
-  await page.getByRole("button", { name: /Prepare problem details/i }).click();
+  await page.getByRole("button", { name: /Diagnose problem/i }).click();
   assert.match(await page.locator("#result-title").innerText(), /Duplicate rows in an incremental model/i);
 
   // Check narrow mobile layout for horizontal overflow.
