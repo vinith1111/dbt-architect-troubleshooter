@@ -40,9 +40,6 @@ try {
     assert.equal(await page.locator('input[name="scenario-choice"]:checked').count(), 0, `${item.value}: selection should reset`);
   }
 
-  // Expand the guided diagnosis tool before interacting with it.
-  await page.locator("details.guided > summary").click();
-
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
   await page.getByRole("button", { name: /Build my diagnostic request/i }).click();
