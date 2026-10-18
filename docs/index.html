@@ -323,8 +323,34 @@ function render(item, text, matched, ruleKey) {
   const tinglishTitle={execution:"dbt command run avvatledu",performance:"Model slow ga run avuthondi",compilation:"Compilation error",profile:"Profile/configuration issue",dependency:"Model dependency issue",unique:"Unique test fail ayyindi",not_null:"Not-null test fail ayyindi",relationships:"Relationships test fail ayyindi",test_failure:"dbt test fail ayyindi",missing_data:"Data missing ga undi",schema_change:"Schema/column change",source_data:"Source data issue",accepted_values:"Accepted-values test fail ayyindi",freshness:"Source freshness issue",duplicates:"Incremental model lo duplicate rows",missed_updates:"Incremental run lo updates miss ayyayi",late_arriving_data:"Late-arriving data issue",wrong_unique_key:"unique_key/model grain issue",snapshot_key:"Snapshot unique key issue",snapshot_updated_at:"Snapshot updated_at issue",snapshot_history:"Snapshot history unexpected ga undi",schema_added:"New column downstream lo ledu",schema_removed:"Column rename/remove issue",contract:"Model contract mismatch"};
   if(item && tinglishTitle[ruleKey]) $("result-title").textContent="Manam check cheyyalsindi: "+tinglishTitle[ruleKey];
   appendList("fix", item ? [tinglishFirstStep[ruleKey] || item.fix[0]] : ["Log lo first actual error copy cheyyi, leda wrong output ki oka clear example ivvu."]); 
-  appendList("more-fix", item ? item.fix.slice(1) : ["Ye command run chesavo cheppu, example: dbt build leda dbt test.","SQL run avvakamunde fail ayyinda, run avutunnappudu fail ayyinda, leka run ayyaka wrong data vachinda cheppu."]);
-  appendList("validation", item ? item.validation : ["Ippude production SQL change cheyyaku.","Problem clear ayyaka, safe environment lo affected model/test ni small scope lo reproduce cheyyi."]);
+  const tinglishNextChecks={
+    execution:["First error message lo file, line number, command identify cheyyi.","dbt debug and dbt parse results check cheyyi; credentials ni logs lo share cheyyaku."],
+    performance:["Query Profile lo expensive scan/join/spill ekkada jarugutundo chudu.","Recent code, data volume, warehouse and configuration changes compare cheyyi."],
+    compilation:["Referenced model, macro, variable names and YAML syntax verify cheyyi.","dbt parse run chesi first compilation error resolve ayyaka malli test cheyyi."],
+    profile:["Active target, adapter, account/database/schema and role settings verify cheyyi.","Credentials valid aa check cheyyi; secrets ni source code lo store cheyyaku."],
+    dependency:["ref() model names and source definitions correct aa verify cheyyi.","Circular dependency unte dependency path ni break cheyyi."],
+    unique:["Fail ayina keys full records tho inspect cheyyi.","Duplicates join, union, source data leda wrong model grain nunchi vachaya trace cheyyi."],
+    not_null:["NULL values source nunchi vachaya, transformation create chesinda trace cheyyi.","Business rule prakaram default, filter, leda upstream data correction avasarama decide cheyyi."],
+    relationships:["Parent table lo missing keys unnaya query cheyyi.","Load order, key formatting and parent/child join logic verify cheyyi."],
+    test_failure:["Test SQL and failed rows chudu.","Test expectation business rule ki correct ga match avuthunda confirm cheyyi."],
+    missing_data:["Oka missing record ni source nunchi final target varaku trace cheyyi.","Incremental filter, joins, permissions and upstream load status check cheyyi."],
+    schema_change:["Source schema, model SELECT list and downstream columns compare cheyyi.","Renamed/new columns ki dependent models and contracts update cheyyi."],
+    source_data:["Latest source load timestamp and upstream job status verify cheyyi.","Source lo record itself unda, correct key tho vachinda query cheyyi."],
+    accepted_values:["Allowed list bayata unna actual values inspect cheyyi.","Business owner rule confirm chesaka data leda accepted-values config update cheyyi."],
+    freshness:["Latest loaded timestamp ni freshness threshold tho compare cheyyi.","Source schedule, delayed upstream job and timestamp timezone verify cheyyi."],
+    duplicates:["Target duplicate keys ni source and compiled MERGE logic tho compare cheyyi.","Join multiplication, unique_key and incremental predicate inspect cheyyi."],
+    missed_updates:["Changed record timestamp incremental predicate ki qualify avuthunda check cheyyi.","unique_key and merge/update logic target record ni match chestunnaya verify cheyyi."],
+    late_arriving_data:["Event timestamp and ingestion timestamp compare cheyyi.","Incremental window late records ni include chestunda test cheyyi."],
+    wrong_unique_key:["Expected row grain ni one sentence lo define cheyyi.","Candidate key uniqueness and null checks run chesi config update cheyyi."],
+    snapshot_key:["Source key uniqueness/null checks run cheyyi.","Snapshot config and source grain match avuthunnaya verify cheyyi."],
+    snapshot_updated_at:["Timestamp column name/type and null values check cheyyi.","Timestamp timezone and change detection behavior verify cheyyi."],
+    snapshot_history:["Oka entity ki source change timeline and snapshot history compare cheyyi.","Snapshot strategy and unique_key config inspect cheyyi."],
+    schema_added:["New column SELECT list lo include ayyinda verify cheyyi.","Dependent models, contracts and tests update cheyyi."],
+    schema_removed:["Old column references project lo search cheyyi.","Downstream SQL, YAML, tests and contracts update cheyyi."],
+    contract:["Expected and actual column names/types compare cheyyi.","Intended schema confirm chesi model SQL or contract correct cheyyi."]
+  };
+  appendList("more-fix", item ? (tinglishNextChecks[ruleKey] || ["Error evidence ni inspect cheyyi.","Root cause confirm ayyaka safe environment lo change test cheyyi."]) : ["Ye command run chesavo cheppu, example: dbt build leda dbt test.","SQL run avvakamunde fail ayyinda, run avutunnappudu fail ayyinda, leka run ayyaka wrong data vachinda cheppu."]);
+  appendList("validation", item ? ["Safe/dev environment lo affected model ni run chesi output inspect cheyyi.","Relevant dbt test run cheyyi; expected row count, keys, schema leda timestamp verify cheyyi.","Related downstream models meeda regression check cheyyi."] : ["Ippude production SQL change cheyyaku.","Problem clear ayyaka, safe environment lo affected model/test ni small scope lo reproduce cheyyi."]);
   $("prevention").textContent=item ? "Root cause confirm ayyaka ee issue malli raakunda focused dbt test leda regression check add cheyyi. CI lo run ayyela chudu." : "Root cause telisaka focused test add cheyyi. Appudu same issue malli vachina CI lo early ga catch cheyyachu.";
   $("evidence").textContent=item ? "Ee diagnosis ee category ki match ayina error text/rule batti suggest chesindi. Root cause final ga confirm cheyyadaniki error line, affected row/key, compiled SQL leda query profile ni verify cheyyi." : "Recognize ayina rule signal dorakaledu. Nee text ee browser lone untundi; server ki pampincham.";
   $("followup").style.display="block";
