@@ -20,6 +20,12 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
 .learning{margin:0 0 18px;border-color:#405d79;background:linear-gradient(145deg,#1c2b3b,#141e29)}.learning-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.learning-grid .wide{grid-column:1/-1}.learning select{width:100%;border:1px solid #3b4c5b;border-radius:12px;background:#0e171f;color:var(--text);font:inherit;padding:11px 12px}.learning label{margin-top:12px}.scenario-card{border:1px solid #344958;border-radius:14px;background:#101921;padding:15px;margin-top:14px}.scenario-card p{margin:6px 0;color:#d7e2e8}.choice-list{display:grid;gap:8px;margin-top:12px}.choice{display:flex;align-items:flex-start;gap:10px;padding:11px;border:1px solid #344958;border-radius:11px;background:#16232e;cursor:pointer}.choice input{margin-top:5px;accent-color:var(--accent)}.choice:has(input:checked){border-color:var(--accent);background:#18332f}.learning-feedback{margin-top:14px;padding:13px;border-radius:12px;border:1px solid #31584f;background:#17332e}.learning-feedback h4{margin:0 0 7px;color:var(--accent)}.learning-feedback ol{margin:8px 0 0;padding-left:20px}.learning-feedback li+li{margin-top:6px}.learning-feedback[hidden]{display:none}@media(max-width:760px){.learning-grid{grid-template-columns:1fr}.learning-grid .wide{grid-column:auto}}
 
 .home-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.home-primary,.home-secondary{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:11px 15px;border-radius:11px;text-decoration:none;font-weight:800;font-size:14px}.home-primary{background:var(--accent);color:#09221c}.home-primary:hover{background:var(--accent2)}.home-secondary{border:1px solid #405d79;background:#1c2b3b;color:var(--text)}.more-learning{margin-top:16px;border:1px solid var(--line);border-radius:13px;background:#101921;overflow:hidden}.more-learning summary{padding:13px 15px;cursor:pointer;font-weight:750;color:var(--text)}.more-learning summary:focus-visible,.home-actions a:focus-visible,.learning-links a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.learning-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 12px 12px}.learning-links a{display:flex;flex-direction:column;gap:4px;border:1px solid #344958;background:#16232e;border-radius:11px;padding:12px;text-decoration:none;color:var(--text)}.learning-links a:hover{border-color:var(--accent);background:#18332f}.learning-links strong{font-size:14px}.learning-links span{font-size:12px;color:var(--muted)}@media(max-width:520px){.home-actions{display:grid;grid-template-columns:1fr}.home-actions a{width:100%}.learning-links{grid-template-columns:1fr}}
+
+/* Conversational diagnosis: lead with one plain-English next step. */
+.chat-result{border-color:#35665c;background:linear-gradient(145deg,#172b2b,#121c24)}
+.chat-bubble{max-width:850px;border:1px solid #31584f;border-radius:16px 16px 16px 5px;background:#17332e;padding:16px 18px;margin:0 0 14px}
+.chat-bubble h3{font-size:clamp(20px,3vw,26px);margin:0 0 7px}.chat-bubble p{margin:0;color:#d7e9e3}
+.chat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.chat-message{border:1px solid #2b3b49;background:#101921;border-radius:14px;padding:15px}.chat-message h4{margin:0 0 8px;color:var(--accent);font-size:14px}.chat-message p{margin:0;color:#d7e2e8;font-size:14px}.chat-message ol{margin:0;padding-left:20px;color:#d7e2e8;font-size:14px}.chat-message li+li{margin-top:7px}.chat-message.full{grid-column:1/-1}.technical-details{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:#101921}.technical-details summary{padding:13px 15px;cursor:pointer;font-weight:750}.technical-details[open]{padding-bottom:14px}.technical-details .result-grid{padding:0 14px;margin-top:0}.chat-next{margin-top:14px;border-left-color:var(--accent);background:#162a2a;color:#d7e9e3}.chat-next strong{color:var(--accent)}@media(max-width:760px){.chat-grid{grid-template-columns:1fr}.chat-message.full{grid-column:auto}.chat-bubble{padding:14px}}
 </style>
 </head>
 <body>
@@ -172,20 +178,27 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     </aside>
   </div>
 
-  <section id="result" class="panel" aria-live="polite" aria-atomic="true">
-    <div class="result-head">
-      <div><h3 id="result-title">Diagnosis</h3><p id="result-summary"></p></div>
-      <span id="result-status" class="pill">Rule matched</span>
+  <section id="result" class="panel chat-result" aria-live="polite" aria-atomic="true">
+    <div class="chat-bubble">
+      <h3 id="result-title">Let's work through it together</h3>
+      <p id="result-summary">I'll explain the likely area in simple terms, then give you one useful thing to check first.</p>
     </div>
-    <div class="result-grid">
-      <div class="result-block"><h4>Diagnosis</h4><p id="diagnosis"></p></div>
-      <div class="result-block"><h4>Why this matters</h4><p id="explanation"></p></div>
-      <div class="result-block"><h4>Recommended next steps</h4><ol id="fix"></ol></div>
-      <div class="result-block"><h4>Validate the fix</h4><ol id="validation"></ol></div>
-      <div class="result-block"><h4>Prevent recurrence</h4><p id="prevention"></p></div>
-      <div class="result-block"><h4>Evidence used</h4><p id="evidence" class="evidence"></p></div>
+    <div class="chat-grid">
+      <div class="chat-message"><h4>What I understand so far</h4><p id="diagnosis"></p></div>
+      <div class="chat-message"><h4>Try this first</h4><ol id="fix"></ol></div>
+      <div class="chat-message full"><h4>Why I'm suggesting this</h4><p id="explanation"></p></div>
     </div>
-    <div id="followup" class="notice" style="display:none"></div>
+    <div id="followup" class="notice chat-next" style="display:none"></div>
+    <details class="technical-details">
+      <summary>Show detailed checks (for project work)</summary>
+      <div class="result-grid">
+        <div class="result-block"><h4>Other next steps</h4><ol id="more-fix"></ol></div>
+        <div class="result-block"><h4>How to confirm it's fixed</h4><ol id="validation"></ol></div>
+        <div class="result-block"><h4>Prevent it next time</h4><p id="prevention"></p></div>
+        <div class="result-block"><h4>Evidence recognized by this rule</h4><p id="evidence" class="evidence"></p></div>
+      </div>
+    </details>
+    <p class="hint">This tool uses fixed local rules, not AI. Treat this as a starting point, not proof of root cause. No text is sent to a server.</p>
   </section>
   <footer>dbt Architect Troubleshooter · Deterministic rules · No AI APIs or models</footer>
 </main>
@@ -250,17 +263,18 @@ function detect(text, selected) {
 function appendList(id, values) { const el=$(id); el.replaceChildren(); values.forEach(value=>{const li=document.createElement("li");li.textContent=value;el.appendChild(li);}); }
 function render(item, text, matched) {
   $("result").style.display="block";
-  $("result-title").textContent=item ? item.title : "More evidence needed";
-  $("result-summary").textContent=item ? item.category+" · Deterministic rule match" : "No specific rule matched this text";
-  $("result-status").textContent=item ? "Rule matched" : "Needs investigation";
-  $("diagnosis").textContent=item ? item.diagnosis : "I can't safely identify a root cause from this description alone.";
-  $("explanation").textContent=item ? item.explanation : "The current rule set recognizes only specific error signals. A vague symptom can have multiple causes, so guessing could send you toward an unsafe change.";
-  appendList("fix", item ? item.fix : ["Paste the complete first actionable error and the command that failed.","Include the relevant model/test name and whether this happens in parse, build, test, snapshot, or an incremental run.","For incremental/snapshot/schema problems, select the matching category if you know it and add the evidence you observed."]);
-  appendList("validation", item ? item.validation : ["Run dbt parse if the failure occurs before execution.","Capture the smallest reproducible failure and inspect the relevant compiled SQL or failing rows.","Do not apply a production fix until the cause is supported by evidence."]);
-  $("prevention").textContent=item ? item.prevention : "Add a regression test after the specific cause is confirmed.";
-  $("evidence").textContent=item ? item.evidence : "No recognized rule signal found. Input was not sent to a server.";
+  $("result-title").textContent=item ? "Let's work through: "+item.title : "Let's narrow this down together";
+  $("result-summary").textContent=item ? "I found a rule that matches part of what you described. It points us toward a place to investigate, not a confirmed root cause." : "I don't have enough matching evidence yet, so I won't guess. Let's collect one clearer clue."; 
+  $("result-status") && ($("result-status").textContent=item ? "Possible match" : "Need one more clue");
+  $("diagnosis").textContent=item ? item.diagnosis : "I understand something went wrong, but your description could fit more than one dbt issue. We can narrow it down by starting with the first actionable error or one example of the wrong output.";
+  $("explanation").textContent=item ? item.explanation : "The tool only recognizes specific text patterns. The first useful clue is usually the first error above the final failure summary, or one example row/key that is missing or duplicated.";
+  appendList("fix", item ? item.fix.slice(0,1) : ["Copy the first actionable error from the log, or describe one specific example of what is wrong."]); 
+  appendList("more-fix", item ? item.fix.slice(1) : ["Tell me which command you ran (for example, dbt build or dbt test).","Say whether it failed before running SQL, during execution, or finished with incorrect data."]);
+  appendList("validation", item ? item.validation : ["Do not change production SQL yet.","Once the symptom is clearer, reproduce it with the smallest affected model or test in a safe environment."]);
+  $("prevention").textContent=item ? item.prevention : "After the cause is confirmed, add a focused test or regression example so the same issue is easier to catch next time.";
+  $("evidence").textContent=item ? item.evidence : "No recognized rule signal found. Your text stays in this browser and is not sent to a server.";
   $("followup").style.display="block";
-  $("followup").textContent=item ? "Rule-based guidance, not proof of root cause. Confirm the evidence in your project and adapter before changing production models." : "Try choosing a problem category if the issue is known. This tool will not invent a diagnosis for an unsupported case.";
+  $("followup").textContent=item ? "One question to narrow it down: can you check the first step above and share what you observe? If you know the exact error or have one example row/key, add it to the problem box and run Diagnose again. I'll use the rule set to look for a more specific signal." : "One question to start: what is the first actual error shown in the log, or what is one concrete example of the wrong result? Add that detail to the problem box and run Diagnose again.";
   $("result").scrollIntoView({behavior:"smooth",block:"start"});
 }
 $("diagnostic-form").addEventListener("submit", event=>{
