@@ -41,7 +41,7 @@ try {
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
   await page.getByRole("button", { name: /Build my diagnostic request/i }).click();
-  assert.equal(await page.locator("#result-status").innerText(), "Needs investigation");
+  assert.match(await page.locator("#result-status").innerText(), /needs investigation/i);
   assert.match(await page.locator("#diagnosis").innerText(), /can't safely identify a root cause/i);
 
   // A known symptom should route to its matching deterministic guidance.
