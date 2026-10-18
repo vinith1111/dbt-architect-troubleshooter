@@ -46,7 +46,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
       <nav class="learning-links" aria-label="Learning and practice">
         <a href="./sql-learn.html"><strong>SQL: Data Engineering for</strong><span>Queries, joins, incremental DML, data quality ni examples with learn</span></a>
         <a href="./snowflake-learn.html"><strong>Snowflake</strong><span>Data loading, performance, security, pipelines ni simple English lo learn</span></a>
-        <a href="./python-learn.html"><strong>Python for Data Engineering</strong><span>Python concepts ni simple English examples with practice do</span></a>
+        <a href="./python-learn.html"><strong>Python for Data Engineering</strong><span>Practice Python concepts with simple English examples</span></a>
         <a href="./aws-learn.html"><strong>AWS for Data Engineering</strong><span>S3, IAM, Glue, monitoring gurinchi learn</span></a>
         <a href="./real-world-scenarios.html"><strong>Real-world scenarios</strong><span>Practice production issues and recovery</span></a>
         <a href="./enterprise-interview-lab.html"><strong>Enterprise interview lab</strong><span>Interview questions, sample answers, follow-up questions</span></a>
@@ -69,7 +69,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
             <option value="duplicate">Duplicate rows are visible</option>
             <option value="slow">Model run avvadaniki more time takes</option>
             <option value="missing">Rows leda updates missing</option>
-            <option value="snapshot">Snapshot history correct ga is missing</option>
+            <option value="snapshot">Snapshot history is missing or incorrect</option>
             <option value="schema">Column missing happened leda change happened</option>
             <option value="source">Source data old ga is leda missing</option>
           </select>
@@ -80,7 +80,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
             <option value="unsure">Not sure</option>
             <option value="before">Model start before it runs</option>
             <option value="during">Model run avutunnappudu</option>
-            <option value="after">Run after result wrong ga is</option>
+            <option value="after">The run completes, but the result is incorrect</option>
             <option value="test">Tests run chesinappudu</option>
           </select>
         </div>
@@ -110,8 +110,8 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     <h3 id="learning-title">Practice real-world dbt problems</h3>
     <p class="guided-intro">Production experience is not required. Select a scenario, choose what you would check first, then review the evidence-based explanation.</p>
     <div class="learning-grid">
-      <div class="wide"><label for="scenario-select">Practice for scenario select do</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
-      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>What would you check first?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="First troubleshooting step select do"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Check my answer</button><button id="scenario-reset" class="btn secondary" type="button">Try again</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next checks</strong><ol id="scenario-next"></ol><p><strong>Fix ayindo confirm do:</strong> <span id="scenario-validate"></span></p><p><strong>Prevent recurrence:</strong> <span id="scenario-prevent"></span></p></div></div>
+      <div class="wide"><label for="scenario-select">Select a practice scenario</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
+      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>What would you check first?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="Select the first troubleshooting step"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Check my answer</button><button id="scenario-reset" class="btn secondary" type="button">Try again</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next checks</strong><ol id="scenario-next"></ol><p><strong>How to verify the fix:</strong> <span id="scenario-validate"></span></p><p><strong>Prevent recurrence:</strong> <span id="scenario-prevent"></span></p></div></div>
     </div>
     <p class="hint">These are practice examples, not claims about your project. Fixed examples and rules run only in your browser.</p>
   </section>
@@ -123,10 +123,10 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
       <form id="diagnostic-form">
         <label for="problem">Error message / problem details</label>
         <textarea id="problem" required maxlength="12000" placeholder="Example: Database Error in model orders: duplicate rows after an incremental run..."></textarea>
-        <p class="hint">Logs paste chese before passwords, tokens, customer data, secrets remove do.</p>
+        <p class="hint">Remove passwords, tokens, customer data, and secrets before pasting logs.</p>
         <label for="category">Problem category (optional)</label>
         <select id="category">
-          <option value="auto">Text based on automatic ga identify do</option>
+          <option value="auto">Identify the issue automatically from the text</option>
           <option value="execution">Model leda The dbt command did not complete</option>
           <option value="performance">The model is running slowly</option>
           <option value="compilation">Compilation / Jinja / macro</option>
@@ -158,9 +158,9 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
         </div>
       </form>
       <div class="chips" aria-label="Example problems">
-        <button class="chip" type="button" data-example="Compilation Error in model stg_orders: undefined macro normalize_status">Compilation error example try do</button>
-        <button class="chip" type="button" data-example="Unique test failed for customer_id in dim_customers">Test failure example try do</button>
-        <button class="chip" type="button" data-example="Rows are missing after the incremental run; updates from yesterday were not reflected">Incremental issue example try do</button>
+        <button class="chip" type="button" data-example="Compilation Error in model stg_orders: undefined macro normalize_status">Try a compilation-error example</button>
+        <button class="chip" type="button" data-example="Unique test failed for customer_id in dim_customers">Try a test-failure example</button>
+        <button class="chip" type="button" data-example="Rows are missing after the incremental run; updates from yesterday were not reflected">Try an incremental-model example</button>
       </div>
     </section>
 
@@ -181,11 +181,11 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
   <section id="result" class="panel chat-result" aria-live="polite" aria-atomic="true">
     <div class="chat-bubble">
       <h3 id="result-title">Step-by-step ga problem solve cheddam</h3>
-      <p id="result-summary">Possible reason ni simple English lo explain and, before check cheyyalsina okka useful step cheptham.</p>
+      <p id="result-summary">Get a simple explanation of the possible cause and one useful first check.</p>
     </div>
     <div class="chat-grid">
       <div class="chat-message"><h4>Nenu understand chesindi</h4><p id="diagnosis"></p></div>
-      <div class="chat-message"><h4>Munduga idi check do</h4><ol id="fix"></ol></div>
+      <div class="chat-message"><h4>Check this first</h4><ol id="fix"></ol></div>
       <div class="chat-message full"><h4>Idi why cheptunnanu</h4><p id="explanation"></p></div>
     </div>
     <div id="followup" class="notice chat-next" style="display:none"><p id="followup-question"></p><a class="home-secondary" href="#problem">Nenu observe chesindi add do ↓</a></div>
