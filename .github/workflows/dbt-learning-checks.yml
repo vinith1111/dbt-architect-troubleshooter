@@ -1,0 +1,38 @@
+name: dbt learning project checks
+
+on:
+  pull_request:
+    paths:
+      - "dbt-learning-project/**"
+      - ".github/workflows/dbt-learning-checks.yml"
+  push:
+    branches:
+      - main
+      - "feature/dbt-learning-poc"
+    paths:
+      - "dbt-learning-project/**"
+      - ".github/workflows/dbt-learning-checks.yml"
+
+jobs:
+  parse-and-compile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dbt-learning-project
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dbt Snowflake adapter
+        run: python -m pip install "dbt-snowflake>=1.8,<2.0"
+      - name: Configure placeholder profile for offline parse
+        run: |
+          mkdir -p "$HOME/.dbt"
+          cp profiles.yml.example "$HOME/.dbt/profiles.yml"
+      - name: Check dbt version
+        run: dbt --version
+      - name: Parse project without connecting to Snowflake
+        run: dbt parse --profiles-dir "$HOME/.dbt"
+      - name: Compile project without connecting to Snowflake
+        run: dbt compile --profiles-dir "$HOME/.dbt"
