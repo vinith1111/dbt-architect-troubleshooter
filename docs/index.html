@@ -166,7 +166,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
 
     <aside class="panel side">
       <div class="side-title"><span class="dot"></span><h3>What you will get</h3></div>
-      <span class="pill">Mundhu evidence check</span>
+      <span class="pill">Check evidence first</span>
       <ul>
         <li><strong>Diagnosis:</strong> A possible cause based on clues in your error.</li>
         <li><strong>Explanation:</strong> A simple explanation of what the error suggests and what remains unconfirmed.</li>
@@ -180,7 +180,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
 
   <section id="result" class="panel chat-result" aria-live="polite" aria-atomic="true">
     <div class="chat-bubble">
-      <h3 id="result-title">Let's solve the problem step by step</h3>
+      <h3 id="result-title">Let's narrow down the problem together</h3>
       <p id="result-summary">Get a simple explanation of the possible cause and one useful first check.</p>
     </div>
     <div class="chat-grid">
@@ -265,19 +265,19 @@ function render(item, text, matched, ruleKey) {
   $("result").style.display="block";
   $("result-title").textContent=item ? "Let's investigate step by step: "+item.title : "Let's narrow down the problem together";
   $("result-summary").textContent=item ? "I found a rule that matches part of what you described. It points us toward a place to investigate, not a confirmed root cause." : "I don't have enough matching evidence yet, so I won't guess. Let's collect one clearer clue."; 
-  const plainSummary={execution:"The dbt command stopped before completing. Find the first actual error to understand what happened.",performance:"The model is taking longer than usual. Compare this run with a normal run before changing anything.",test_failure:"The test found data that violates its rule. Review the failing rows before changing SQL or weakening the test.",missing_data:"Some expected data is missing. Trace one example from the source through the model.",schema_change:"The column or table structure changed. Compare the source schema with what the model expects.",source_data:"Check whether source data arrived late or is missing. First verify that the upstream load completed.",compilation:"dbt could not parse or compile part of the project. The first error usually identifies the file or macro to inspect.",profile:"dbt could not find the profile it was configured to use. Let's compare the configured profile name with the one available to this run.",dependency:"dbt could not resolve a model dependency, or it found a circular reference. Let's check the referenced model names and dependency path.",unique:"The tested column contains repeated values. Confirm that the column is supposed to be unique before changing anything.",not_null:"A column that is expected to have a value contains NULLs. Let's inspect the affected rows and the upstream logic.",relationships:"Some values have no matching parent record. Inspect those keys and verify that the parent data arrived.",accepted_values:"The column contains values outside the approved list. Confirm whether the data or the allowed list is incorrect.",freshness:"The source freshness check suggests that the data may be older than expected. Verify the latest load timestamp.",duplicates:"The incremental model appears to be adding duplicate rows. Inspect a duplicate key and how the model matches existing rows.",missed_updates:"An incremental run may be skipping changes to existing records. Trace one changed record from the filter through to the target.",late_arriving_data:"Some records may be arriving after the model's time window. Compare event time with arrival time.",wrong_unique_key:"The key used to match incremental rows may not uniquely identify each row. Confirm the model's grain first.",snapshot_key:"A snapshot needs a stable key for each source record. Check that the configured key exists and is unique.",snapshot_updated_at:"The snapshot update timestamp may be missing or empty. Verify the configured column and its values.",snapshot_history:"Snapshot history may be missing expected changes. Compare source changes for one entity with its snapshot history.",schema_added:"The new source column may be excluded from the model SQL. Check whether the model explicitly lists its output columns.",schema_removed:"Column rename/remove ayyundachu. Old name where more use avutundo find do.",contract:"Model output, declared schema contract with match is not running. Expected and actual column names/types compare cheddam."};
+  const plainSummary={execution:"The dbt command stopped before completing. Find the first actual error to understand what happened.",performance:"The model is taking longer than usual. Compare this run with a normal run before changing anything.",test_failure:"The test found data that violates its rule. Review the failing rows before changing SQL or weakening the test.",missing_data:"Some expected data is missing. Trace one example from the source through the model.",schema_change:"The column or table structure changed. Compare the source schema with what the model expects.",source_data:"Check whether source data arrived late or is missing. First verify that the upstream load completed.",compilation:"dbt could not parse or compile part of the project. The first error usually identifies the file or macro to inspect.",profile:"dbt could not find the profile it was configured to use. Let's compare the configured profile name with the one available to this run.",dependency:"dbt could not resolve a model dependency, or it found a circular reference. Let's check the referenced model names and dependency path.",unique:"The tested column contains repeated values. Confirm that the column is supposed to be unique before changing anything.",not_null:"A column that is expected to have a value contains NULLs. Let's inspect the affected rows and the upstream logic.",relationships:"Some values have no matching parent record. Inspect those keys and verify that the parent data arrived.",accepted_values:"The column contains values outside the approved list. Confirm whether the data or the allowed list is incorrect.",freshness:"The source freshness check suggests that the data may be older than expected. Verify the latest load timestamp.",duplicates:"The incremental model appears to be adding duplicate rows. Inspect a duplicate key and how the model matches existing rows.",missed_updates:"An incremental run may be skipping changes to existing records. Trace one changed record from the filter through to the target.",late_arriving_data:"Some records may be arriving after the model's time window. Compare event time with arrival time.",wrong_unique_key:"The key used to match incremental rows may not uniquely identify each row. Confirm the model's grain first.",snapshot_key:"A snapshot needs a stable key for each source record. Check that the configured key exists and is unique.",snapshot_updated_at:"The snapshot update timestamp may be missing or empty. Verify the configured column and its values.",snapshot_history:"Snapshot history may be missing expected changes. Compare source changes for one entity with its snapshot history.",schema_added:"The new source column may be excluded from the model SQL. Check whether the model explicitly lists its output columns.",schema_removed:"A column may have been renamed or removed. Find any remaining references to the old name.",contract:"The model output does not match the declared schema contract. Compare the expected and actual column names and data types."};
   $("diagnosis").textContent=item ? (plainSummary[ruleKey] || item.diagnosis) : "The problem is clear, but this description could match several dbt issues. Share the first actual error or one incorrect output example to narrow it down.";
-  const tinglishWhy={
+  const ruleExplanation={
     execution:"Configuration, permissions, or compilation issues may prevent the command from starting. Identify the first actual error.",
     performance:"A model may be slow because of data volume, joins, scans, warehouse resources, or its query plan. Use Query Profile evidence to narrow down the cause.",
     compilation:"The issue was detected during SQL/Jinja compilation, before the model ran. First verify the error line and macro/ref name.",
     profile:"dbt may not be finding the correct project profile or connection. Verify profile names, adapter settings, and credential configuration.",
     dependency:"A model reference may be missing, or the dependency graph may contain a cycle. Trace the referenced model names and dependency path.",
-    unique:"Unique test fail if repeated key values are present. Aa column nijanga unique undala model grain with confirm do.",
+    unique:"A unique test fails when repeated key values are present. Confirm that the column should be unique at the model's intended grain.",
     not_null:"A required column contains NULL values. Trace whether they came from the source or were introduced by a transformation.",
     relationships:"Some keys in the child table have no matching parent row. Check for missing parent data or incorrect keys.",
     test_failure:"The test result does not match the expected rule. Review failing rows to determine whether the expectation or the data is wrong.",
-    missing_data:"Expected record where miss ayyindo source from target varaku trace should. Filters and load status check do.",
+    missing_data:"Trace the missing record from source to target. Check filters and load status.",
     schema_change:"Source column names or types may not match the model output. Compare the SELECT list with downstream references.",
     source_data:"Verify the latest source timestamp and confirm that the upstream load completed.",
     accepted_values:"Values outside the approved list are present. Confirm whether the data needs fixing or the allowed-values list needs updating.",
@@ -291,10 +291,10 @@ function render(item, text, matched, ruleKey) {
     snapshot_history:"Compare one entity's source changes with its snapshot history.",
     schema_added:"Check whether the new column is included in the model SELECT list and passed through downstream models.",
     schema_removed:"Identify models that still reference the old name of a renamed or removed column.",
-    contract:"Actual model output columns/types declared contract with match is not running. Expected and actual schema compare do."
+    contract:"The actual model output does not match the declared contract. Compare the expected and actual schemas."
   };
-  $("explanation").textContent=item ? (tinglishWhy[ruleKey] || "Several causes are possible. Use the error evidence to confirm the root cause.") : "This tool identifies known error patterns only. Check the first error above the final failure message, or provide an example of a missing or duplicate row/key.";
-  const tinglishFirstStep={
+  $("explanation").textContent=item ? (ruleExplanation[ruleKey] || "Several causes are possible. Use the error evidence to confirm the root cause.") : "This tool identifies known error patterns only. Check the first error above the final failure message, or provide an example of a missing or duplicate row/key.";
+  const firstStepByRule={
     execution:"Find the first actual error in the terminal. Check the lines before the final line as well.",
     performance:"Compare a normal run with a slow run. Check scans, joins, spills, and warehouse usage in Query Profile.",
     compilation:"Check the file name, line number, and macro name in the error. Fix the first compilation error first.",
@@ -320,36 +320,36 @@ function render(item, text, matched, ruleKey) {
     schema_removed:"Search the project for the old column name. Verify the source schema and downstream references.",
     contract:"Compare the expected contract column names and types with the actual model output."
   };
-  const tinglishTitle={execution:"The dbt command did not complete",performance:"The model is running slowly",compilation:"Compilation error",profile:"Profile/configuration issue",dependency:"Model dependency issue",unique:"Unique test failed",not_null:"Not-null test failed",relationships:"Relationships test failed",test_failure:"dbt test failed",missing_data:"Data is missing",schema_change:"Schema/column change",source_data:"Source data issue",accepted_values:"Accepted-values test fail happened",freshness:"Source freshness issue",duplicates:"Duplicate rows in an incremental model",missed_updates:"Updates were missed during an incremental run",late_arriving_data:"Late-arriving data issue",wrong_unique_key:"unique_key/model grain issue",snapshot_key:"Snapshot unique key issue",snapshot_updated_at:"Snapshot updated_at issue",snapshot_history:"Snapshot history is unexpected",schema_added:"A new column is missing downstream",schema_removed:"Column rename/remove issue",contract:"Model contract mismatch"};
-  if(item && tinglishTitle[ruleKey]) $("result-title").textContent="What to check: "+tinglishTitle[ruleKey];
-  appendList("fix", item ? [tinglishFirstStep[ruleKey] || item.fix[0]] : ["Log lo first actual error copy do, leda wrong output ki a clear example ivvu."]); 
-  const tinglishNextChecks={
+  const ruleTitle={execution:"The dbt command did not complete",performance:"The model is running slowly",compilation:"Compilation error",profile:"Profile/configuration issue",dependency:"Model dependency issue",unique:"Unique test failed",not_null:"Not-null test failed",relationships:"Relationships test failed",test_failure:"dbt test failed",missing_data:"Data is missing",schema_change:"Schema/column change",source_data:"Source data issue",accepted_values:"Accepted-values test failed",freshness:"Source freshness issue",duplicates:"Duplicate rows in an incremental model",missed_updates:"Updates were missed during an incremental run",late_arriving_data:"Late-arriving data issue",wrong_unique_key:"unique_key/model grain issue",snapshot_key:"Snapshot unique key issue",snapshot_updated_at:"Snapshot updated_at issue",snapshot_history:"Snapshot history is unexpected",schema_added:"A new column is missing downstream",schema_removed:"Column rename/remove issue",contract:"Model contract mismatch"};
+  if(item && ruleTitle[ruleKey]) $("result-title").textContent="What to check: "+ruleTitle[ruleKey];
+  appendList("fix", item ? [firstStepByRule[ruleKey] || item.fix[0]] : ["Copy the first actual error from the log, or provide a clear example of the incorrect output."]); 
+  const followUpChecks={
     execution:["Identify the file, line number, and command in the first error message.","Check the results of dbt debug and dbt parse. Do not share credentials in logs."],
-    performance:["Use Query Profile to identify expensive scans, joins, or spills.","Recent code, data volume, warehouse and configuration changes compare do."],
+    performance:["Use Query Profile to identify expensive scans, joins, or spills.","Compare recent changes to code, data volume, warehouse settings, and configuration."],
     compilation:["Verify referenced model, macro, and variable names, along with YAML syntax.","Run dbt parse, resolve the first compilation error, and test again."],
     profile:["Verify the active target, adapter, account/database/schema, and role settings.","Check that credentials are valid. Do not store secrets in source code."],
-    dependency:["ref() model names and source definitions correct aa verify do.","Break the dependency cycle if a circular dependency exists."],
-    unique:["Inspect the full records for the failing keys.","Duplicates join, union, source data leda wrong model grain from vachaya trace do."],
-    not_null:["NULL values source from vachaya, transformation create chesinda trace do.","Business rule prakaram default, filter, leda upstream data correction avasarama decide do."],
-    relationships:["Query for keys missing from the parent table.","Load order, key formatting and parent/child join logic verify do."],
-    test_failure:["Test SQL and failed rows check.","Confirm that the test expectation matches the business rule."],
+    dependency:["Verify that ref() model names and source definitions are correct.","Break the dependency cycle if a circular dependency exists."],
+    unique:["Inspect the full records for the failing keys.","Trace whether duplicates come from joins, unions, source data, or an incorrect model grain."],
+    not_null:["Trace whether NULL values came from the source or were introduced by a transformation.","Determine whether the business rule requires a default, filter, or upstream data correction."],
+    relationships:["Query for keys missing from the parent table.","Verify load order, key formatting, and parent-child join logic."],
+    test_failure:["Inspect the test SQL and failed rows.","Confirm that the test expectation matches the business rule."],
     missing_data:["Trace one missing record from the source to the final target.","Check the incremental filter, joins, permissions, and upstream load status."],
-    schema_change:["Source schema, model SELECT list and downstream columns compare do.","Update dependent models and contracts for renamed or new columns."],
-    source_data:["Latest source load timestamp and upstream job status verify do.","Check whether the record exists in the source and whether it arrived with the correct key."],
-    accepted_values:["Inspect the actual values outside the allowed list.","Business owner rule confirm chesaka data leda accepted-values config update do."],
-    freshness:["Compare the latest loaded timestamp with the freshness threshold.","Source schedule, delayed upstream job and timestamp timezone verify do."],
-    duplicates:["Compare duplicate target keys with the source and compiled MERGE logic.","Join multiplication, unique_key and incremental predicate inspect do."],
+    schema_change:["Compare the source schema, model SELECT list, and downstream columns.","Update dependent models and contracts for renamed or new columns."],
+    source_data:["Verify the latest source load timestamp and upstream job status.","Check whether the record exists in the source and whether it arrived with the correct key."],
+    accepted_values:["Inspect the actual values outside the allowed list.","After confirming the rule with the business owner, update the data or the accepted-values configuration."],
+    freshness:["Compare the latest loaded timestamp with the freshness threshold.","Verify the source schedule, upstream job delays, and timestamp time zone."],
+    duplicates:["Compare duplicate target keys with the source and compiled MERGE logic.","Inspect join multiplication, unique_key, and the incremental predicate."],
     missed_updates:["Check whether the changed record's timestamp satisfies the incremental predicate.","Verify that unique_key and merge/update logic match the target record."],
-    late_arriving_data:["Event timestamp and ingestion timestamp compare do.","Test whether the incremental window includes late-arriving records."],
-    wrong_unique_key:["Define the expected row grain in one sentence.","Candidate key uniqueness and null checks run and config update do."],
-    snapshot_key:["Source key uniqueness/null checks run do.","Snapshot config and source grain match avuthunnaya verify do."],
+    late_arriving_data:["Compare the event timestamp with the ingestion timestamp.","Test whether the incremental window includes late-arriving records."],
+    wrong_unique_key:["Define the expected row grain in one sentence.","Run uniqueness and NULL checks on the candidate key, then update the configuration if needed."],
+    snapshot_key:["Run uniqueness and NULL checks on the source key.","Verify that the snapshot configuration matches the source grain."],
     snapshot_updated_at:["Check the timestamp column name, type, and NULL values.","Verify the timestamp time zone and change-detection behavior."],
     snapshot_history:["Compare the source change timeline for one entity with its snapshot history.","Snapshot strategy and unique_key config inspect do."],
-    schema_added:["Verify that the new column is included in the SELECT list.","Dependent models, contracts and tests update do."],
-    schema_removed:["Search the project for references to the old column.","Downstream SQL, YAML, tests and contracts update do."],
-    contract:["Expected and actual column names/types compare do.","Intended schema confirm and model SQL or contract correct do."]
+    schema_added:["Verify that the new column is included in the SELECT list.","Update dependent models, contracts, and tests."],
+    schema_removed:["Search the project for references to the old column.","Update downstream SQL, YAML, tests, and contracts."],
+    contract:["Compare the expected and actual column names and data types.","Confirm the intended schema and correct the model SQL or contract."]
   };
-  appendList("more-fix", item ? (tinglishNextChecks[ruleKey] || ["Inspect the error evidence.","After confirming the root cause, test the change in a safe environment."]) : ["Ye command run chesavo cheppu, example: dbt build leda dbt test.","SQL run before it runs fail ayyinda, run avutunnappudu fail ayyinda, leka run after wrong data vachinda cheppu."]);
+  appendList("more-fix", item ? (followUpChecks[ruleKey] || ["Inspect the error evidence.","After confirming the root cause, test the change in a safe environment."]) : ["Which command did you run? For example, dbt build or dbt test.","Did the command fail before execution, during execution, or did it finish with incorrect data?"]);
   appendList("validation", item ? ["Run the affected model in a safe development environment and inspect the output.","Run the relevant dbt tests and verify the expected row count, keys, schema, or timestamp.","Run regression checks on related downstream models."] : ["Do not change production SQL yet.","Once the problem is clear, reproduce it on a small scale in a safe environment."]);
   $("prevention").textContent=item ? "After confirming the root cause, add a focused dbt test or regression check to prevent recurrence. Ensure it runs in CI." : "After confirming the root cause, add a focused test so CI can catch the issue early if it recurs.";
   $("evidence").textContent=item ? "This diagnosis is suggested by an error text or rule matching this category. To confirm the root cause, verify the error line, affected row/key, compiled SQL, or query profile." : "No known rule matched the text. Your text stays in this browser and is not sent to a server.";
