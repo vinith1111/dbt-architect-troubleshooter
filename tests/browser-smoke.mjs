@@ -49,7 +49,7 @@ try {
   // A known symptom should route to its matching deterministic guidance.
   await page.locator("#guided-problem").selectOption("duplicate");
   await page.getByRole("button", { name: /Problem details prepare cheyyi/i }).click();
-  assert.match(await page.locator("#result-title").innerText(), /Duplicate rows observed/i);
+  assert.match(await page.locator("#result-title").innerText(), /Incremental model lo duplicate rows/i);
 
   // Check narrow mobile layout for horizontal overflow.
   await page.setViewportSize({ width: 375, height: 812 });
