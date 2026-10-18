@@ -127,22 +127,22 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
         <label for="category">Problem category (optional)</label>
         <select id="category">
           <option value="auto">Text based on automatic ga identify do</option>
-          <option value="execution">Model leda dbt command run is not running</option>
+          <option value="execution">Model leda The dbt command did not complete</option>
           <option value="performance">The model is running slowly</option>
           <option value="compilation">Compilation / Jinja / macro</option>
           <option value="profile">Profile / configuration</option>
           <option value="dependency">Missing dependency / circular reference</option>
-          <option value="unique">Unique test fail happened</option>
-          <option value="not_null">Not-null test fail happened</option>
-          <option value="relationships">Relationships test fail happened</option>
-          <option value="test_failure">dbt test fail happened</option>
+          <option value="unique">Unique test failed</option>
+          <option value="not_null">Not-null test failed</option>
+          <option value="relationships">Relationships test failed</option>
+          <option value="test_failure">dbt test failed</option>
           <option value="missing_data">Rows leda updates missing</option>
           <option value="schema_change">Schema / column change</option>
           <option value="source_data">Source data missing leda old ga is</option>
           <option value="accepted_values">Accepted-values test failure</option>
           <option value="freshness">Source freshness</option>
           <option value="duplicates">Incremental run after duplicate rows</option>
-          <option value="missed_updates">Incremental run lo updates miss ayyayi</option>
+          <option value="missed_updates">Updates were missed during an incremental run</option>
           <option value="late_arriving_data">Late ga arriving data incremental lo miss happened</option>
           <option value="wrong_unique_key">Incremental unique key / model grain</option>
           <option value="snapshot_key">Snapshot unique key</option>
@@ -265,18 +265,18 @@ function render(item, text, matched, ruleKey) {
   $("result").style.display="block";
   $("result-title").textContent=item ? "Let's investigate step by step: "+item.title : "Let's narrow down the problem together";
   $("result-summary").textContent=item ? "I found a rule that matches part of what you described. It points us toward a place to investigate, not a confirmed root cause." : "I don't have enough matching evidence yet, so I won't guess. Let's collect one clearer clue."; 
-  const plainSummary={execution:"dbt command complete without happening stop happened. Enduku what happened telusukovadaniki first actual error find should.",performance:"The model is taking longer than usual. Compare this run with a normal run before changing anything.",test_failure:"Test rule ki match kaani data dorikindi. SQL change doing leda test ni weak doing before fail ayina rows let us check.",missing_data:"Some expected data is missing. Trace one example from the source through the model.",schema_change:"The column or table structure changed. Compare the source schema with what the model expects.",source_data:"Check whether source data arrived late or is missing. First verify that the upstream load completed.",compilation:"dbt project lo a part ni parse/compile cheyyalekapoyindi. First error usually ye file/macro check cheyyalo clue istundi.",profile:"dbt could not find the profile it was configured to use. Let's compare the configured profile name with the one available to this run.",dependency:"dbt could not resolve a model dependency, or it found a circular reference. Let's check the referenced model names and dependency path.",unique:"The tested column contains repeated values. Confirm that the column is supposed to be unique before changing anything.",not_null:"A column that is expected to have a value contains NULLs. Let's inspect the affected rows and the upstream logic.",relationships:"Konni values ki matching parent record is missing. Aa keys ni chusi parent data vachindo verify cheddam.",accepted_values:"Column lo approved list lo leni values are present. Data wrong aa, allowed list wrong aa confirm should.",freshness:"Source freshness check prakaram data expected kanna old ga undochu. Latest load timestamp verify do.",duplicates:"Incremental model repeated rows add chestunnattu is. Oka duplicate key ni, existing rows with model ela match chestundo inspect cheddam.",missed_updates:"Incremental run existing record changes ni skip and undochu. Oka changed record ni filter from target varaku trace cheddam.",late_arriving_data:"Konni records model time window taruvatha arrive avuthunnayi emo. Event time ni arrival time with compare cheddam.",wrong_unique_key:"Incremental rows match cheyyadaniki use done key, each row ni correct ga identify cheyyakapovachu. Mundhu model row grain confirm do.",snapshot_key:"Snapshot ki each source record for stable key kavali. Configure done key unda, unique ga unda check do.",snapshot_updated_at:"Snapshot update timestamp missing/empty ga undochu. Configure done column and values verify do.",snapshot_history:"Snapshot history expected laga is missing. Oka entity source changes ni history with compare cheddam.",schema_added:"New source column model SQL lo exclude ayi undochu. Model output columns ni explicit ga list chestunda check do.",schema_removed:"Column rename/remove ayyundachu. Old name where more use avutundo find do.",contract:"Model output, declared schema contract with match is not running. Expected and actual column names/types compare cheddam."};
+  const plainSummary={execution:"The dbt command stopped before completing. Find the first actual error to understand what happened.",performance:"The model is taking longer than usual. Compare this run with a normal run before changing anything.",test_failure:"The test found data that violates its rule. Review the failing rows before changing SQL or weakening the test.",missing_data:"Some expected data is missing. Trace one example from the source through the model.",schema_change:"The column or table structure changed. Compare the source schema with what the model expects.",source_data:"Check whether source data arrived late or is missing. First verify that the upstream load completed.",compilation:"dbt could not parse or compile part of the project. The first error usually identifies the file or macro to inspect.",profile:"dbt could not find the profile it was configured to use. Let's compare the configured profile name with the one available to this run.",dependency:"dbt could not resolve a model dependency, or it found a circular reference. Let's check the referenced model names and dependency path.",unique:"The tested column contains repeated values. Confirm that the column is supposed to be unique before changing anything.",not_null:"A column that is expected to have a value contains NULLs. Let's inspect the affected rows and the upstream logic.",relationships:"Konni values ki matching parent record is missing. Aa keys ni chusi parent data vachindo verify cheddam.",accepted_values:"Column lo approved list lo leni values are present. Data wrong aa, allowed list wrong aa confirm should.",freshness:"Source freshness check prakaram data expected kanna old ga undochu. Latest load timestamp verify do.",duplicates:"The incremental model appears to be adding duplicate rows. Inspect a duplicate key and how the model matches existing rows.",missed_updates:"An incremental run may be skipping changes to existing records. Trace one changed record from the filter through to the target.",late_arriving_data:"Konni records model time window taruvatha arrive avuthunnayi emo. Event time ni arrival time with compare cheddam.",wrong_unique_key:"Incremental rows match cheyyadaniki use done key, each row ni correct ga identify cheyyakapovachu. Mundhu model row grain confirm do.",snapshot_key:"Snapshot ki each source record for stable key kavali. Configure done key unda, unique ga unda check do.",snapshot_updated_at:"Snapshot update timestamp missing/empty ga undochu. Configure done column and values verify do.",snapshot_history:"Snapshot history may be missing expected changes. Compare source changes for one entity with its snapshot history.",schema_added:"New source column model SQL lo exclude ayi undochu. Model output columns ni explicit ga list chestunda check do.",schema_removed:"Column rename/remove ayyundachu. Old name where more use avutundo find do.",contract:"Model output, declared schema contract with match is not running. Expected and actual column names/types compare cheddam."};
   $("diagnosis").textContent=item ? (plainSummary[ruleKey] || item.diagnosis) : "The problem is clear, but this description could match several dbt issues. Share the first actual error or one incorrect output example to narrow it down.";
   const tinglishWhy={
     execution:"Configuration, permissions, or compilation issues may prevent the command from starting. Identify the first actual error.",
     performance:"Model slow avvadam data volume, joins, scans, warehouse resources leda query plan because of may happen. Query Profile evidence with narrow down should.",
     compilation:"SQL/Jinja compile stage lo model execute before it runs issue detect happened. Error line, macro/ref name ni first verify do.",
     profile:"dbt ki correct project profile/connection dorakakapovachu. Profile names, adapter settings, credentials configuration verify should.",
-    dependency:"Model references or dependency graph lo missing name/circular reference undochu. Mention ayina model names and dependency path trace do.",
+    dependency:"A model reference may be missing, or the dependency graph may contain a cycle. Trace the referenced model names and dependency path.",
     unique:"Unique test fail if repeated key values are present. Aa column nijanga unique undala model grain with confirm do.",
     not_null:"Required column lo NULL values are present. Source from vachaya, transformation lo create ayyaya trace do.",
-    relationships:"Child table lo unna some keys ki parent table lo matching row is missing. Missing parent data or incorrect keys check do.",
-    test_failure:"Test rule ki data match is not running. Fail ayina rows chusi test expectation correct aa data wrong aa decide do.",
+    relationships:"Some keys in the child table have no matching parent row. Check for missing parent data or incorrect keys.",
+    test_failure:"The test result does not match the expected rule. Review failing rows to determine whether the expectation or the data is wrong.",
     missing_data:"Expected record where miss ayyindo source from target varaku trace should. Filters and load status check do.",
     schema_change:"Source column names/types model output with mismatch ayyi undochu. SELECT list and downstream references compare do.",
     source_data:"Source lo latest data vachinda, upstream load complete ayyinda timestamp with verify do.",
@@ -293,68 +293,68 @@ function render(item, text, matched, ruleKey) {
     schema_removed:"Renamed/removed column ni old name with reference chestunna models identify do.",
     contract:"Actual model output columns/types declared contract with match is not running. Expected and actual schema compare do."
   };
-  $("explanation").textContent=item ? (tinglishWhy[ruleKey] || "Ee issue ki possible reasons are present. Error evidence ni chusi root cause confirm should.") : "Ee tool known error patterns ni matrame identify does. Final failure message above unna first error check. Leda missing/duplicate ayina a row/key example ivvu.";
+  $("explanation").textContent=item ? (tinglishWhy[ruleKey] || "Ee issue ki possible reasons are present. Error evidence ni chusi root cause confirm should.") : "This tool identifies known error patterns only. Check the first error above the final failure message, or provide an example of a missing or duplicate row/key.";
   const tinglishFirstStep={
-    execution:"Terminal lo first actual error find do. Last line matrame instead of daniki before unna error also check.",
+    execution:"Find the first actual error in the terminal. Check the lines before the final line as well.",
     performance:"Normal run with slow run ni compare do. Query Profile lo scans, joins, spills, warehouse usage check do.",
     compilation:"Check the file name, line number, and macro name in the error. Fix the first compilation error first.",
     profile:"dbt_project.yml lo profile name, profiles.yml lo name match avutunnaya check do. dbt debug run do.",
-    dependency:"Error lo mention ayina model/ref name correct aa check. Circular dependency unda trace do.",
+    dependency:"Check whether the model or ref name in the error is correct. Trace the dependency graph for a cycle.",
     unique:"Query the keys that failed the test. Confirm whether the business rule requires that column to be unique.",
-    not_null:"NULL values unna rows query do. Source from NULL vastonda, transformation lo create avutonda trace do.",
-    relationships:"Parent table lo match kaani keys identify do. Parent data load ayyinda check do.",
-    test_failure:"Fail ayina test name and rows inspect do. Test rule correct aa, data wrong aa confirm do.",
-    missing_data:"Missing ayina a record ni source from target varaku trace do. Source load and model filters check do.",
-    schema_change:"Source schema ni model select list with compare do. New/renamed column downstream ki pass avutunda check do.",
-    source_data:"Source lo latest load timestamp check do. Upstream job complete ayyinda verify do.",
-    accepted_values:"Approved list outside unna values query do. Data wrong aa, allowed list update avvala aa confirm do.",
+    not_null:"Query rows containing NULL values. Trace whether the NULL originates in the source or is introduced by a transformation.",
+    relationships:"Identify keys without a matching parent row. Check whether the parent data was loaded.",
+    test_failure:"Inspect the failed test name and rows. Confirm whether the test rule or the data is incorrect.",
+    missing_data:"Trace a missing record from the source to the target. Check the source load and model filters.",
+    schema_change:"Compare the source schema with the model's select list. Check whether the new or renamed column reaches downstream models.",
+    source_data:"Check the latest load timestamp in the source. Verify that the upstream job completed.",
+    accepted_values:"Query values outside the approved list. Confirm whether the data is wrong or the allowed list needs updating.",
     freshness:"Source latest timestamp ni configured freshness threshold with compare do.",
-    duplicates:"Oka duplicate key select and source/target rows compare do. unique_key, joins, incremental MERGE logic check do.",
-    missed_updates:"Oka changed record source lo unda check do. Incremental filter, timestamp boundary, unique_key trace do.",
-    late_arriving_data:"Record event time and arrival time compare do. Incremental window late records ni exclude chestunda check do.",
+    duplicates:"Select a duplicate key and compare source and target rows. Check unique_key, joins, and incremental MERGE logic.",
+    missed_updates:"Check whether a changed record exists in the source. Trace the incremental filter, timestamp boundary, and unique_key.",
+    late_arriving_data:"Compare the event time with the arrival time. Check whether the incremental window excludes late-arriving records.",
     wrong_unique_key:"Define the model grain. Test whether the configured unique_key identifies each intended row uniquely.",
-    snapshot_key:"Snapshot config lo unique_key correct aa, source lo null/duplicate keys unnaya check do.",
+    snapshot_key:"Check whether unique_key is correct in the snapshot configuration and whether the source contains NULL or duplicate keys.",
     snapshot_updated_at:"Verify the snapshot updated_at column name and check for null source timestamps.",
-    snapshot_history:"Oka entity source changes ni snapshot history with compare do. Snapshot strategy/config inspect do.",
-    schema_added:"Model SQL lo explicit column list unda check. New column SELECT lo include ayyinda check do.",
+    snapshot_history:"Compare source changes for one entity with snapshot history. Inspect the snapshot strategy and configuration.",
+    schema_added:"Check whether the model SQL uses an explicit column list and whether the new column is included in SELECT.",
     schema_removed:"Old column name ni project lo search do. Source schema and downstream references update ayyaya verify do.",
     contract:"Expected contract column names/types ni actual model output with compare do."
   };
-  const tinglishTitle={execution:"dbt command run is not running",performance:"The model is running slowly",compilation:"Compilation error",profile:"Profile/configuration issue",dependency:"Model dependency issue",unique:"Unique test fail happened",not_null:"Not-null test fail happened",relationships:"Relationships test fail happened",test_failure:"dbt test fail happened",missing_data:"Data is missing",schema_change:"Schema/column change",source_data:"Source data issue",accepted_values:"Accepted-values test fail happened",freshness:"Source freshness issue",duplicates:"Incremental model lo duplicate rows",missed_updates:"Incremental run lo updates miss ayyayi",late_arriving_data:"Late-arriving data issue",wrong_unique_key:"unique_key/model grain issue",snapshot_key:"Snapshot unique key issue",snapshot_updated_at:"Snapshot updated_at issue",snapshot_history:"Snapshot history is unexpected",schema_added:"New column downstream lo is missing",schema_removed:"Column rename/remove issue",contract:"Model contract mismatch"};
-  if(item && tinglishTitle[ruleKey]) $("result-title").textContent="Manam check cheyyalsindi: "+tinglishTitle[ruleKey];
+  const tinglishTitle={execution:"The dbt command did not complete",performance:"The model is running slowly",compilation:"Compilation error",profile:"Profile/configuration issue",dependency:"Model dependency issue",unique:"Unique test failed",not_null:"Not-null test failed",relationships:"Relationships test failed",test_failure:"dbt test failed",missing_data:"Data is missing",schema_change:"Schema/column change",source_data:"Source data issue",accepted_values:"Accepted-values test fail happened",freshness:"Source freshness issue",duplicates:"Duplicate rows in an incremental model",missed_updates:"Updates were missed during an incremental run",late_arriving_data:"Late-arriving data issue",wrong_unique_key:"unique_key/model grain issue",snapshot_key:"Snapshot unique key issue",snapshot_updated_at:"Snapshot updated_at issue",snapshot_history:"Snapshot history is unexpected",schema_added:"A new column is missing downstream",schema_removed:"Column rename/remove issue",contract:"Model contract mismatch"};
+  if(item && tinglishTitle[ruleKey]) $("result-title").textContent="What to check: "+tinglishTitle[ruleKey];
   appendList("fix", item ? [tinglishFirstStep[ruleKey] || item.fix[0]] : ["Log lo first actual error copy do, leda wrong output ki a clear example ivvu."]); 
   const tinglishNextChecks={
-    execution:["First error message lo file, line number, command identify do.","dbt debug and dbt parse results check do; credentials ni logs lo share cheyyaku."],
+    execution:["Identify the file, line number, and command in the first error message.","Check the results of dbt debug and dbt parse. Do not share credentials in logs."],
     performance:["Query Profile lo expensive scan/join/spill where jarugutundo check.","Recent code, data volume, warehouse and configuration changes compare do."],
-    compilation:["Referenced model, macro, variable names and YAML syntax verify do.","dbt parse run and first compilation error resolve after again test do."],
-    profile:["Active target, adapter, account/database/schema and role settings verify do.","Credentials valid aa check do; secrets ni source code lo store cheyyaku."],
+    compilation:["Verify referenced model, macro, and variable names, along with YAML syntax.","Run dbt parse, resolve the first compilation error, and test again."],
+    profile:["Verify the active target, adapter, account/database/schema, and role settings.","Check that credentials are valid. Do not store secrets in source code."],
     dependency:["ref() model names and source definitions correct aa verify do.","Circular dependency unte dependency path ni break do."],
-    unique:["Fail ayina keys full records with inspect do.","Duplicates join, union, source data leda wrong model grain from vachaya trace do."],
+    unique:["Inspect the full records for the failing keys.","Duplicates join, union, source data leda wrong model grain from vachaya trace do."],
     not_null:["NULL values source from vachaya, transformation create chesinda trace do.","Business rule prakaram default, filter, leda upstream data correction avasarama decide do."],
     relationships:["Parent table lo missing keys unnaya query do.","Load order, key formatting and parent/child join logic verify do."],
     test_failure:["Test SQL and failed rows check.","Confirm that the test expectation matches the business rule."],
-    missing_data:["Oka missing record ni source from final target varaku trace do.","Incremental filter, joins, permissions and upstream load status check do."],
+    missing_data:["Trace one missing record from the source to the final target.","Check the incremental filter, joins, permissions, and upstream load status."],
     schema_change:["Source schema, model SELECT list and downstream columns compare do.","Renamed/new columns ki dependent models and contracts update do."],
     source_data:["Latest source load timestamp and upstream job status verify do.","Source lo record itself unda, correct key with vachinda query do."],
-    accepted_values:["Allowed list outside unna actual values inspect do.","Business owner rule confirm chesaka data leda accepted-values config update do."],
+    accepted_values:["Inspect the actual values outside the allowed list.","Business owner rule confirm chesaka data leda accepted-values config update do."],
     freshness:["Latest loaded timestamp ni freshness threshold with compare do.","Source schedule, delayed upstream job and timestamp timezone verify do."],
     duplicates:["Target duplicate keys ni source and compiled MERGE logic with compare do.","Join multiplication, unique_key and incremental predicate inspect do."],
-    missed_updates:["Changed record timestamp incremental predicate ki qualify avuthunda check do.","unique_key and merge/update logic target record ni match chestunnaya verify do."],
+    missed_updates:["Check whether the changed record's timestamp satisfies the incremental predicate.","Verify that unique_key and merge/update logic match the target record."],
     late_arriving_data:["Event timestamp and ingestion timestamp compare do.","Incremental window late records ni include chestunda test do."],
     wrong_unique_key:["Expected row grain ni one sentence lo define do.","Candidate key uniqueness and null checks run and config update do."],
     snapshot_key:["Source key uniqueness/null checks run do.","Snapshot config and source grain match avuthunnaya verify do."],
-    snapshot_updated_at:["Timestamp column name/type and null values check do.","Timestamp timezone and change detection behavior verify do."],
-    snapshot_history:["Oka entity ki source change timeline and snapshot history compare do.","Snapshot strategy and unique_key config inspect do."],
+    snapshot_updated_at:["Check the timestamp column name, type, and NULL values.","Verify the timestamp time zone and change-detection behavior."],
+    snapshot_history:["Compare the source change timeline for one entity with its snapshot history.","Snapshot strategy and unique_key config inspect do."],
     schema_added:["New column SELECT list lo include ayyinda verify do.","Dependent models, contracts and tests update do."],
     schema_removed:["Old column references project lo search do.","Downstream SQL, YAML, tests and contracts update do."],
     contract:["Expected and actual column names/types compare do.","Intended schema confirm and model SQL or contract correct do."]
   };
   appendList("more-fix", item ? (tinglishNextChecks[ruleKey] || ["Error evidence ni inspect do.","Root cause confirm after safe environment lo change test do."]) : ["Ye command run chesavo cheppu, example: dbt build leda dbt test.","SQL run before it runs fail ayyinda, run avutunnappudu fail ayyinda, leka run after wrong data vachinda cheppu."]);
-  appendList("validation", item ? ["Safe/dev environment lo affected model ni run and output inspect do.","Relevant dbt test run do; expected row count, keys, schema leda timestamp verify do.","Related downstream models on regression check do."] : ["Ippude production SQL change cheyyaku.","Problem clear after, safe environment lo affected model/test ni small scope lo reproduce do."]);
+  appendList("validation", item ? ["Run the affected model in a safe development environment and inspect the output.","Run the relevant dbt tests and verify the expected row count, keys, schema, or timestamp.","Run regression checks on related downstream models."] : ["Do not change production SQL yet.","Once the problem is clear, reproduce it on a small scale in a safe environment."]);
   $("prevention").textContent=item ? "Root cause confirm after ee issue again raakunda focused dbt test leda regression check add do. CI lo run ayyela check." : "After confirming the root cause, add a focused test so CI can catch the issue early if it recurs.";
-  $("evidence").textContent=item ? "Ee diagnosis ee category ki match ayina error text/rule based on suggest chesindi. Root cause final ga confirm cheyyadaniki error line, affected row/key, compiled SQL leda query profile ni verify do." : "Recognize ayina rule signal dorakaledu. Nee text ee browser only will be; server ki pampincham.";
+  $("evidence").textContent=item ? "This diagnosis is suggested by an error text or rule matching this category. To confirm the root cause, verify the error line, affected row/key, compiled SQL, or query profile." : "No known rule matched the text. Your text stays in this browser and is not sent to a server.";
   $("followup").style.display="block";
-  $("followup-question").textContent=item ? "Oka question: above first step check and em observe chesavo cheppu. Exact error leda a row/key example ni problem box lo add do. Category ni Auto-detect lo by setting again Diagnose do. Appudu more specific ga guide cheyyagalanu." : "What is the first clue? Log lo first actual error leda wrong result ki a example ivvu. Problem box lo add and Auto-detect with again Diagnose do.";
+  $("followup-question").textContent=item ? "One question: what did you observe after checking the first step above? Add the exact error or one row/key example to the problem box, select Auto-detect, and run Diagnose again for more specific guidance." : "What is the first clue? Provide the first actual error in the log or an example of the incorrect result. Add it to the problem box and run Diagnose again with Auto-detect.";
   $("result").scrollIntoView({behavior:"smooth",block:"start"});
 }
 $("diagnostic-form").addEventListener("submit", event=>{
