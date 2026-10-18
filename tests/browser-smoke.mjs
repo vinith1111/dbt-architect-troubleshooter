@@ -42,7 +42,7 @@ try {
 
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
-  await page.getByRole("button", { name: /Build my diagnostic request/i }).click();
+  await page.getByRole("button", { name: /Problem details prepare cheyyi/i }).click();
   assert.match(await page.locator("#result-status").innerText(), /needs investigation/i);
   assert.match(await page.locator("#diagnosis").innerText(), /Problem jarigindani ardham ayyindi/i);
 
