@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,email,signup_date,country
+1,Asha,Rao,asha@example.com,2024-01-10,India
+2,Ravi,Kumar,ravi@example.com,2024-02-14,India
+3,Maya,Chen,maya@example.com,2024-03-02,Singapore
+4,Noah,Smith,noah@example.com,2024-03-18,USA
+5,Leela,Devi,leela@example.com,2024-04-01,India
