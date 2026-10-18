@@ -55,8 +55,8 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
   </section>
 
   <section class="panel guided" aria-labelledby="guided-title">
-    <span class="guided-tag">Start here if you're unsure</span>
-    <h3 id="guided-title">Em adagaalo teliyatleda? Problem ni identify cheddam.</h3>
+    <span class="guided-tag">Ekkada start cheyyalo teliyakapotey ikkada start cheyyi</span>
+    <h3 id="guided-title">Problem enti ani clear ga leda? Mundu identify cheddam.</h3>
     <p class="guided-intro">Konni simple questions ki answer ivvu. dbt technical words teliyakapoina parledhu. Ee details tho diagnostic request browser lone prepare avuthundi. AI use cheyyam.</p>
     <form id="guided-form">
       <div class="guided-grid">
@@ -107,19 +107,19 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
 
   <section class="panel learning" aria-labelledby="learning-title">
     <span class="guided-tag">Practice mode · No AI</span>
-    <h3 id="learning-title">Learn to troubleshoot with realistic dbt scenarios</h3>
-    <p class="guided-intro">No production experience needed. Pick a scenario, choose what you would check first, then compare your reasoning with the evidence-based walkthrough.</p>
+    <h3 id="learning-title">Real project dbt problems ni practice cheddam</h3>
+    <p class="guided-intro">Production experience avasaram ledu. Oka scenario select chesi, first em check chesthavo choose cheyyi. Tarvatha evidence-based explanation tho compare cheyyi.</p>
     <div class="learning-grid">
-      <div class="wide"><label for="scenario-select">Choose a practice scenario</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
-      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>What would you check first?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="Choose your first troubleshooting step"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Check my reasoning</button><button id="scenario-reset" class="btn secondary" type="button">Try again</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next checks</strong><ol id="scenario-next"></ol><p><strong>Validate:</strong> <span id="scenario-validate"></span></p><p><strong>Prevent it:</strong> <span id="scenario-prevent"></span></p></div></div>
+      <div class="wide"><label for="scenario-select">Practice kosam scenario select cheyyi</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
+      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>Munduga em check chesthav?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="First troubleshooting step select cheyyi"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Naa answer check cheyyi</button><button id="scenario-reset" class="btn secondary" type="button">Malli try cheyyi</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next em check cheyyali</strong><ol id="scenario-next"></ol><p><strong>Fix ayindo confirm cheyyi:</strong> <span id="scenario-validate"></span></p><p><strong>Malli repeat kakunda:</strong> <span id="scenario-prevent"></span></p></div></div>
     </div>
-    <p class="hint">These are learning simulations, not claims about your own project. They use fixed examples and rules in this browser only.</p>
+    <p class="hint">Ivi practice examples matrame, nee project gurinchi claims kaadu. Fixed examples/rules browser lone run avuthayi.</p>
   </section>
 
   <div class="layout">
     <section class="panel">
-      <h3>Problem ni describe cheyyi</h3>
-      <p class="sub">Error message paste cheyyi leda em jarigindo simple ga explain cheyyi.</p>
+      <h3>Problem ni simple ga explain cheyyi</h3>
+      <p class="sub">Error message paste cheyyi leda em jarigindo simple ga cheppu.</p>
       <form id="diagnostic-form">
         <label for="problem">Error message / problem details</label>
         <textarea id="problem" required maxlength="12000" placeholder="Example: Database Error in model orders: duplicate rows after an incremental run..."></textarea>
