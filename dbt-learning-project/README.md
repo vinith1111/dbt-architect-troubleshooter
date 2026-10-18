@@ -60,11 +60,11 @@ payments.csv  -> payments seed  -> stg_payments  -> fct_orders
 1. Change `stg_customers` to trim/lowercase email and run `dbt build --select stg_customers+`.
 2. Add an accepted-values test for order status (completed, returned, cancelled).
 3. Add a `net_revenue` metric to `fct_orders` that excludes returned/cancelled orders. State your business definition first.
-4. Add a macro to normalize emails, then use it in `stg_customers`.
-5. Add an incremental model only after explaining its grain, unique key, and late-arriving-data strategy.
-6. Create a snapshot for customer country changes; use a disposable schema because snapshots create historical records.
+4. Review the included `normalize_email` macro and change it to normalize phone numbers in a separate macro.
+5. Explain the grain, `unique_key`, and three-day late-arriving-data window in `fct_order_activity_incremental`.
+6. Change a customer's country in the seed, run `dbt seed`, then `dbt snapshot` to observe historical versions. Use a disposable schema because snapshots create historical records.
 7. Inspect compiled SQL and Snowflake Query Profile before optimizing.
-8. Add CI that runs `dbt deps`, `dbt parse`, `dbt compile`, and selected tests with secrets stored in GitHub Actions, never in YAML.
+8. Extend the included CI workflow with linting and tests that do not require production credentials. Keep secrets in GitHub Actions, never in YAML.
 
 ## Expected output sanity checks
 
