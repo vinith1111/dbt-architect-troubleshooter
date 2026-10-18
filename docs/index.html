@@ -354,7 +354,7 @@ function render(item, text, matched, ruleKey) {
   $("prevention").textContent=item ? "Root cause confirm ayyaka ee issue malli raakunda focused dbt test leda regression check add cheyyi. CI lo run ayyela chudu." : "Root cause telisaka focused test add cheyyi. Appudu same issue malli vachina CI lo early ga catch cheyyachu.";
   $("evidence").textContent=item ? "Ee diagnosis ee category ki match ayina error text/rule batti suggest chesindi. Root cause final ga confirm cheyyadaniki error line, affected row/key, compiled SQL leda query profile ni verify cheyyi." : "Recognize ayina rule signal dorakaledu. Nee text ee browser lone untundi; server ki pampincham.";
   $("followup").style.display="block";
-  $("followup-question").textContent=item ? "Oka question bro: paina first step check chesi em observe chesavo cheppu. Exact error leda oka row/key example ni problem box lo add cheyyi. Category ni Auto-detect lo petti malli Diagnose cheyyi. Appudu inka specific ga guide cheyyagalanu." : "First clue enti bro? Log lo first actual error leda wrong result ki oka example ivvu. Problem box lo add chesi Auto-detect tho malli Diagnose cheyyi.";
+  $("followup-question").textContent=item ? "Oka question: paina first step check chesi em observe chesavo cheppu. Exact error leda oka row/key example ni problem box lo add cheyyi. Category ni Auto-detect lo petti malli Diagnose cheyyi. Appudu inka specific ga guide cheyyagalanu." : "First clue enti? Log lo first actual error leda wrong result ki oka example ivvu. Problem box lo add chesi Auto-detect tho malli Diagnose cheyyi.";
   $("result").scrollIntoView({behavior:"smooth",block:"start"});
 }
 $("diagnostic-form").addEventListener("submit", event=>{
