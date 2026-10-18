@@ -14,7 +14,7 @@ try {
   await page.goto(pageUrl);
   // The learning and guided tools are intentionally collapsed by default.
   await page.locator("details.more-learning > summary").click();
-  await page.getByRole("heading", { name: /Real project dbt problems ni practice cheddam/i }).waitFor();
+  await page.getByRole("heading", { name: /Practice real-world dbt problems/i }).waitFor();
 
   const cases = [
     { value: "duplicates", correctIndex: 1 },
@@ -42,14 +42,14 @@ try {
 
   // The wizard must handle an unknown problem without inventing a diagnosis.
   await page.locator("#guided-problem").selectOption("unknown");
-  await page.getByRole("button", { name: /Problem details prepare cheyyi/i }).click();
-  assert.match(await page.locator("#result-title").innerText(), /Problem ni kalisi narrow down cheddam/i);
-  assert.match(await page.locator("#diagnosis").innerText(), /Problem jarigindani ardham ayyindi/i);
+  await page.getByRole("button", { name: /Prepare problem details/i }).click();
+  assert.match(await page.locator("#result-title").innerText(), /Let's narrow down the problem/i);
+  assert.match(await page.locator("#diagnosis").innerText(), /I understand the problem you encountered/i);
 
   // A known symptom should route to its matching deterministic guidance.
   await page.locator("#guided-problem").selectOption("duplicate");
-  await page.getByRole("button", { name: /Problem details prepare cheyyi/i }).click();
-  assert.match(await page.locator("#result-title").innerText(), /Incremental model lo duplicate rows/i);
+  await page.getByRole("button", { name: /Prepare problem details/i }).click();
+  assert.match(await page.locator("#result-title").innerText(), /Duplicate rows in an incremental model/i);
 
   // Check narrow mobile layout for horizontal overflow.
   await page.setViewportSize({ width: 375, height: 812 });
