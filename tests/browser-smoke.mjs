@@ -44,7 +44,7 @@ try {
   await page.locator("#guided-problem").selectOption("unknown");
   await page.getByRole("button", { name: /Build my diagnostic request/i }).click();
   assert.match(await page.locator("#result-status").innerText(), /needs investigation/i);
-  assert.match(await page.locator("#diagnosis").innerText(), /can't safely identify a root cause/i);
+  assert.match(await page.locator("#diagnosis").innerText(), /Problem jarigindani ardham ayyindi/i);
 
   // A known symptom should route to its matching deterministic guidance.
   await page.locator("#guided-problem").selectOption("duplicate");
