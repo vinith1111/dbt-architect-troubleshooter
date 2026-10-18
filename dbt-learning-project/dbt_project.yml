@@ -1,5 +1,6 @@
 name: dbt_learning_shop
 version: '1.0.0'
+# Educational project: use a disposable Snowflake schema for all practice runs.
 config-version: 2
 profile: dbt_learning_shop
 model-paths: ["models"]
