@@ -29,13 +29,13 @@ try {
     const options = page.locator('input[name="scenario-choice"]');
     assert.equal(await options.count(), 3, `${item.value}: expected 3 answer options`);
     await options.nth(item.correctIndex).check();
-    await page.getByRole("button", { name: "Check my reasoning" }).click();
+    await page.locator("#scenario-check").click();
     await page.locator("#scenario-feedback").waitFor({ state: "visible" });
     assert.match(await page.locator("#scenario-feedback-title").innerText(), /Good first check/i, `${item.value}: expected correct-answer feedback`);
     assert.equal(await page.locator("#scenario-next li").count(), 4, `${item.value}: expected 4 next checks`);
     assert.ok((await page.locator("#scenario-validate").innerText()).length > 10);
     assert.ok((await page.locator("#scenario-prevent").innerText()).length > 10);
-    await page.getByRole("button", { name: "Try again" }).click();
+    await page.locator("#scenario-reset").click();
     assert.equal(await page.locator("#scenario-feedback").isVisible(), false, `${item.value}: feedback should reset`);
     assert.equal(await page.locator('input[name="scenario-choice"]:checked').count(), 0, `${item.value}: selection should reset`);
   }
