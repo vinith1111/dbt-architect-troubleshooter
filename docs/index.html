@@ -10,14 +10,14 @@
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#1d3741 0,transparent 36%),var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 main{width:min(1040px,100% - 32px);margin:0 auto;padding:36px 0 52px}.brand{display:flex;align-items:center;gap:12px}.mark{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--accent);color:#09221c;font-weight:900;font-size:22px;box-shadow:0 8px 30px #7be0c326}
 .eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.brand h1{margin:2px 0 0;font-size:clamp(22px,4vw,30px);letter-spacing:-.035em}.hero{margin:30px 0 24px;max-width:760px}.hero h2{font-size:clamp(30px,5vw,48px);line-height:1.08;letter-spacing:-.045em;margin:0 0 14px}.hero h2 span{color:var(--accent)}.hero p{color:var(--muted);margin:0;font-size:17px}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.7fr);gap:18px;align-items:start}.panel{border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,#18232d,#121a22);padding:22px;box-shadow:0 16px 45px #00000018}.panel h3{font-size:18px;margin:0 0 5px}.sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}.panel{border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,#18232d,#121a22);padding:22px;box-shadow:0 16px 45px #00000018}.panel h3{font-size:18px;margin:0 0 5px}.sub{color:var(--muted);font-size:14px;margin:0 0 20px}
 label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8px}textarea,select{width:100%;border:1px solid #3b4c5b;border-radius:12px;background:#0e171f;color:var(--text);font:inherit;padding:12px 13px;outline:none}textarea{min-height:175px;resize:vertical}textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #7be0c31b}textarea::placeholder{color:#708493}.hint{font-size:12px;color:var(--muted);margin:7px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:0;border-radius:11px;padding:11px 16px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--accent);color:#09221c}.primary:hover{background:var(--accent2)}.secondary{background:#253440;color:var(--text);border:1px solid #405362}.secondary:hover{background:#304453}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.chip{border:1px solid #344958;background:#1a2833;color:#dce9ef;border-radius:999px;padding:6px 10px;font-size:12px;cursor:pointer}.chip:hover{border-color:var(--accent);color:var(--accent)}
 .side-title{display:flex;align-items:center;gap:9px;margin-bottom:12px}.dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}.side h3{margin:0}.side p,.side li{font-size:14px;color:var(--muted)}.side ul{padding-left:18px;margin:12px 0 0}.side li+li{margin-top:8px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #31584f;background:#17332e;color:var(--accent);border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 #result{margin-top:18px;display:none}.result-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}.result-head h3{font-size:22px;margin:0 0 4px}.result-head p{color:var(--muted);margin:0;font-size:14px}.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:17px}.result-block{background:#101921;border:1px solid #263744;border-radius:13px;padding:14px}.result-block h4{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 8px}.result-block p{margin:0;color:#d7e2e8;font-size:14px}.result-block ol,.result-block ul{padding-left:19px;margin:0;color:#d7e2e8;font-size:14px}.result-block li+li{margin-top:7px}.full{grid-column:1/-1}.evidence{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px!important;color:#b7c8d2!important;overflow-wrap:anywhere}
-.guided{margin:0 0 18px;border-color:#35665c;background:linear-gradient(145deg,#18332f,#14232a)}.guided-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.guided-grid .wide{grid-column:1/-1}.guided .hint{margin-top:6px}.guided select,.guided input{width:100%;border:1px solid #3b4c5b;border-radius:12px;background:#0e171f;color:var(--text);font:inherit;padding:11px 12px}.guided label{margin-top:12px}.guided-intro{color:var(--muted);font-size:14px;margin:0 0 12px}.guided-tag{display:inline-flex;border:1px solid #31584f;background:#17332e;color:var(--accent);border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}@media(max-width:760px){.guided-grid{grid-template-columns:1fr}.guided-grid .wide{grid-column:auto}}.notice{border-left:3px solid var(--warn);padding:10px 12px;background:#2c261b;border-radius:0 9px 9px 0;color:#f4d9aa;font-size:13px;margin-top:15px}.unknown{border-left-color:var(--warn)}footer{color:#758895;font-size:12px;text-align:center;margin-top:24px}a{color:var(--accent)}@media(max-width:760px){main{padding-top:22px}.layout{grid-template-columns:1fr}.panel{padding:18px}.side{order:2}.result-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero{margin-top:24px}.hero p{font-size:15px}}
+.guided{margin:16px 0;border-color:#35665c;background:linear-gradient(145deg,#18332f,#14232a)}.guided-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.guided-grid .wide{grid-column:1/-1}.guided .hint{margin-top:6px}.guided select,.guided input{width:100%;border:1px solid #3b4c5b;border-radius:12px;background:#0e171f;color:var(--text);font:inherit;padding:11px 12px}.guided label{margin-top:12px}.guided-intro{color:var(--muted);font-size:14px;margin:0 0 12px}.guided-tag{display:inline-flex;border:1px solid #31584f;background:#17332e;color:var(--accent);border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}@media(max-width:760px){.guided-grid{grid-template-columns:1fr}.guided-grid .wide{grid-column:auto}}.notice{border-left:3px solid var(--warn);padding:10px 12px;background:#2c261b;border-radius:0 9px 9px 0;color:#f4d9aa;font-size:13px;margin-top:15px}.unknown{border-left-color:var(--warn)}details>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:750}details>summary::-webkit-details-marker{display:none}details>summary span{font-size:12px;color:var(--muted);font-weight:500}details[open]>summary{margin-bottom:14px}.advanced{margin:12px 0 0;color:var(--muted);font-size:13px}.advanced>summary{justify-content:flex-start}.advanced label{margin-top:12px}footer{color:#758895;font-size:12px;text-align:center;margin-top:24px}a{color:var(--accent)}@media(max-width:760px){main{padding-top:22px}.layout{grid-template-columns:1fr}.panel{padding:18px}.side{order:2}.result-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero{margin-top:24px}.hero p{font-size:15px}}
 
-.learning{margin:0 0 18px;border-color:#405d79;background:linear-gradient(145deg,#1c2b3b,#141e29)}.learning-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.learning-grid .wide{grid-column:1/-1}.learning select{width:100%;border:1px solid #3b4c5b;border-radius:12px;background:#0e171f;color:var(--text);font:inherit;padding:11px 12px}.learning label{margin-top:12px}.scenario-card{border:1px solid #344958;border-radius:14px;background:#101921;padding:15px;margin-top:14px}.scenario-card p{margin:6px 0;color:#d7e2e8}.choice-list{display:grid;gap:8px;margin-top:12px}.choice{display:flex;align-items:flex-start;gap:10px;padding:11px;border:1px solid #344958;border-radius:11px;background:#16232e;cursor:pointer}.choice input{margin-top:5px;accent-color:var(--accent)}.choice:has(input:checked){border-color:var(--accent);background:#18332f}.learning-feedback{margin-top:14px;padding:13px;border-radius:12px;border:1px solid #31584f;background:#17332e}.learning-feedback h4{margin:0 0 7px;color:var(--accent)}.learning-feedback ol{margin:8px 0 0;padding-left:20px}.learning-feedback li+li{margin-top:6px}.learning-feedback[hidden]{display:none}@media(max-width:760px){.learning-grid{grid-template-columns:1fr}.learning-grid .wide{grid-column:auto}}
+.learning{margin:12px 0;border-color:#405d79;background:linear-gradient(145deg,#1c2b3b,#141e29)}.learning-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.learning-grid .wide{grid-column:1/-1}.learning select{width:100%;border:1px solid #3b4c5b;border-radius:12px;background:#0e171f;color:var(--text);font:inherit;padding:11px 12px}.learning label{margin-top:12px}.scenario-card{border:1px solid #344958;border-radius:14px;background:#101921;padding:15px;margin-top:14px}.scenario-card p{margin:6px 0;color:#d7e2e8}.choice-list{display:grid;gap:8px;margin-top:12px}.choice{display:flex;align-items:flex-start;gap:10px;padding:11px;border:1px solid #344958;border-radius:11px;background:#16232e;cursor:pointer}.choice input{margin-top:5px;accent-color:var(--accent)}.choice:has(input:checked){border-color:var(--accent);background:#18332f}.learning-feedback{margin-top:14px;padding:13px;border-radius:12px;border:1px solid #31584f;background:#17332e}.learning-feedback h4{margin:0 0 7px;color:var(--accent)}.learning-feedback ol{margin:8px 0 0;padding-left:20px}.learning-feedback li+li{margin-top:6px}.learning-feedback[hidden]{display:none}@media(max-width:760px){.learning-grid{grid-template-columns:1fr}.learning-grid .wide{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -27,70 +27,8 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     <div><div class="eyebrow">Deterministic diagnostics · No AI</div><h1>dbt Architect Troubleshooter</h1></div>
   </header>
   <section class="hero">
-    <h2>Bring the error.<br><span>Find the next right check.</span></h2>
-    <p>Describe your dbt problem and get a structured diagnosis, safe next steps, validation checks, and prevention ideas. Unknown cases stay unknown instead of guessing.</p>
-  </section>
-
-  <section class="panel guided" aria-labelledby="guided-title">
-    <span class="guided-tag">Start here if you're unsure</span>
-    <h3 id="guided-title">Not sure what to ask? We'll help you describe it.</h3>
-    <p class="guided-intro">Answer a few simple questions. No dbt terminology needed. This builds a clear diagnostic request locally, without AI.</p>
-    <form id="guided-form">
-      <div class="guided-grid">
-        <div>
-          <label for="guided-problem">What are you noticing?</label>
-          <select id="guided-problem">
-            <option value="unknown">I'm not sure what the problem is</option>
-            <option value="execution">dbt command or model won't run</option>
-            <option value="test">A test failed</option>
-            <option value="duplicate">I see duplicate rows</option>
-            <option value="slow">A model takes too long</option>
-            <option value="missing">Rows or updates are missing</option>
-            <option value="snapshot">Snapshot history looks wrong</option>
-            <option value="schema">A column is missing or changed</option>
-            <option value="source">Source data looks old or missing</option>
-          </select>
-        </div>
-        <div>
-          <label for="guided-stage">When does it happen?</label>
-          <select id="guided-stage">
-            <option value="unsure">I'm not sure</option>
-            <option value="before">Before the model starts running</option>
-            <option value="during">While the model is running</option>
-            <option value="after">After it finishes, the result looks wrong</option>
-            <option value="test">When I run tests</option>
-          </select>
-        </div>
-        <div>
-          <label for="guided-level">Your experience</label>
-          <select id="guided-level">
-            <option value="beginner">I'm learning dbt</option>
-            <option value="project">I'm working on a project</option>
-            <option value="experienced">I'm experienced with dbt</option>
-          </select>
-        </div>
-        <div>
-          <label for="guided-details">Anything you can share? (optional)</label>
-          <input id="guided-details" maxlength="3000" placeholder="e.g. model name, what changed, short error">
-        </div>
-        <div class="wide actions">
-          <button class="btn primary" type="submit">Build my diagnostic request ↓</button>
-        </div>
-      </div>
-      <p class="hint">Please remove credentials, customer data, and company-sensitive information. Answers stay in this browser page.</p>
-    </form>
-  </section>
-
-
-  <section class="panel learning" aria-labelledby="learning-title">
-    <span class="guided-tag">Practice mode · No AI</span>
-    <h3 id="learning-title">Learn to troubleshoot with realistic dbt scenarios</h3>
-    <p class="guided-intro">No production experience needed. Pick a scenario, choose what you would check first, then compare your reasoning with the evidence-based walkthrough.</p>
-    <div class="learning-grid">
-      <div class="wide"><label for="scenario-select">Choose a practice scenario</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
-      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>What would you check first?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="Choose your first troubleshooting step"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Check my reasoning</button><button id="scenario-reset" class="btn secondary" type="button">Try again</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next checks</strong><ol id="scenario-next"></ol><p><strong>Validate:</strong> <span id="scenario-validate"></span></p><p><strong>Prevent it:</strong> <span id="scenario-prevent"></span></p></div></div>
-    </div>
-    <p class="hint">These are learning simulations, not claims about your own project. They use fixed examples and rules in this browser only.</p>
+    <h2>Fix your next <span>dbt issue.</span></h2>
+    <p>Paste an error. Get clear next steps. No AI, no uploads.</p>
   </section>
 
   <div class="layout">
@@ -155,6 +93,69 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     </aside>
   </div>
 
+  <details class="panel guided">
+    <summary><strong>Need help describing the issue?</strong><span>Answer a few quick questions</span></summary>
+    <span class="guided-tag">Start here if you're unsure</span>
+    <h3 id="guided-title">Not sure what to ask? We'll help you describe it.</h3>
+    <p class="guided-intro">Answer a few simple questions. No dbt terminology needed. This builds a clear diagnostic request locally, without AI.</p>
+    <form id="guided-form">
+      <div class="guided-grid">
+        <div>
+          <label for="guided-problem">What are you noticing?</label>
+          <select id="guided-problem">
+            <option value="unknown">I'm not sure what the problem is</option>
+            <option value="execution">dbt command or model won't run</option>
+            <option value="test">A test failed</option>
+            <option value="duplicate">I see duplicate rows</option>
+            <option value="slow">A model takes too long</option>
+            <option value="missing">Rows or updates are missing</option>
+            <option value="snapshot">Snapshot history looks wrong</option>
+            <option value="schema">A column is missing or changed</option>
+            <option value="source">Source data looks old or missing</option>
+          </select>
+        </div>
+        <div>
+          <label for="guided-stage">When does it happen?</label>
+          <select id="guided-stage">
+            <option value="unsure">I'm not sure</option>
+            <option value="before">Before the model starts running</option>
+            <option value="during">While the model is running</option>
+            <option value="after">After it finishes, the result looks wrong</option>
+            <option value="test">When I run tests</option>
+          </select>
+        </div>
+        <div>
+          <label for="guided-level">Your experience</label>
+          <select id="guided-level">
+            <option value="beginner">I'm learning dbt</option>
+            <option value="project">I'm working on a project</option>
+            <option value="experienced">I'm experienced with dbt</option>
+          </select>
+        </div>
+        <div>
+          <label for="guided-details">Anything you can share? (optional)</label>
+          <input id="guided-details" maxlength="3000" placeholder="e.g. model name, what changed, short error">
+        </div>
+        <div class="wide actions">
+          <button class="btn primary" type="submit">Build my diagnostic request ↓</button>
+        </div>
+      </div>
+      <p class="hint">Please remove credentials, customer data, and company-sensitive information. Answers stay in this browser page.</p>
+    </form>
+  </details>
+
+  <details class="panel learning">
+    <summary><strong>Practice with examples</strong><span>5 short dbt scenarios</span></summary>
+    <span class="guided-tag">Practice mode · No AI</span>
+    <h3 id="learning-title">Learn to troubleshoot with realistic dbt scenarios</h3>
+    <p class="guided-intro">No production experience needed. Pick a scenario, choose what you would check first, then compare your reasoning with the evidence-based walkthrough.</p>
+    <div class="learning-grid">
+      <div class="wide"><label for="scenario-select">Choose a practice scenario</label><select id="scenario-select"><option value="duplicates">Incremental model creates duplicate rows</option><option value="test">A unique test fails</option><option value="slow">A model suddenly runs slowly</option><option value="missing">Updates are missing after an incremental run</option><option value="schema">A new source column is missing downstream</option></select></div>
+      <div class="wide scenario-card"><span class="pill">Scenario</span><p id="scenario-story"></p><p class="hint" id="scenario-goal"></p><label>What would you check first?</label><div id="scenario-choices" class="choice-list" role="radiogroup" aria-label="Choose your first troubleshooting step"></div><div class="actions"><button id="scenario-check" class="btn primary" type="button">Check my reasoning</button><button id="scenario-reset" class="btn secondary" type="button">Try again</button></div><div id="scenario-feedback" class="learning-feedback" aria-live="polite" hidden><h4 id="scenario-feedback-title"></h4><p id="scenario-feedback-copy"></p><strong>Next checks</strong><ol id="scenario-next"></ol><p><strong>Validate:</strong> <span id="scenario-validate"></span></p><p><strong>Prevent it:</strong> <span id="scenario-prevent"></span></p></div></div>
+    </div>
+    <p class="hint">These are learning simulations, not claims about your own project. They use fixed examples and rules in this browser only.</p>
+  </details>
+
   <section id="result" class="panel" aria-live="polite" aria-atomic="true">
     <div class="result-head">
       <div><h3 id="result-title">Diagnosis</h3><p id="result-summary"></p></div>
@@ -170,7 +171,7 @@ label{display:block;font-size:13px;color:#d9e5ec;font-weight:700;margin:16px 0 8
     </div>
     <div id="followup" class="notice" style="display:none"></div>
   </section>
-  <footer>dbt Architect Troubleshooter · Deterministic rules · No AI APIs or models</footer>
+  <footer>dbt Architect Troubleshooter · Free · No AI</footer>
 </main>
 <script>
 "use strict";
