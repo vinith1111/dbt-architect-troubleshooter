@@ -49,6 +49,7 @@ try {
 
   // A known symptom should route to its matching deterministic guidance.
   await page.locator("#guided-problem").selectOption("duplicate");
+  await page.locator("#problem").fill("Duplicate rows in an incremental dbt model");
   await page.getByRole("button", { name: /Diagnose problem/i }).click();
   assert.match(await page.locator("#result-title").innerText(), /Duplicate rows in an incremental model/i);
 
