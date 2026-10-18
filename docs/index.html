@@ -355,6 +355,10 @@ function render(item, text, matched, ruleKey) {
   $("evidence").textContent=item ? "This diagnosis is suggested by an error text or rule matching this category. To confirm the root cause, verify the error line, affected row/key, compiled SQL, or query profile." : "No known rule matched the text. Your text stays in this browser and is not sent to a server.";
   $("followup").style.display="block";
   $("followup-question").textContent=item ? "One question: what did you observe after checking the first step above? Add the exact error or one row/key example to the problem box, select Auto-detect, and run Diagnose again for more specific guidance." : "What is the first clue? Provide the first actual error in the log or an example of the incorrect result. Add it to the problem box and run Diagnose again with Auto-detect.";
+  // Keep the diagnosis panel populated even when no rule matches the input.
+  if (!$("diagnosis").textContent.trim()) {
+    $("diagnosis").textContent = item ? (plainSummary[ruleKey] || item.diagnosis || "Review the first error and one affected row before choosing a fix.") : "The problem is clear, but the description could match several dbt issues. Share the first actual error or one incorrect output example to narrow it down.";
+  }
   $("result").scrollIntoView({behavior:"smooth",block:"start"});
 }
 $("diagnostic-form").addEventListener("submit", event=>{
