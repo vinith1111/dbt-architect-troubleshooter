@@ -1,0 +1,16 @@
+# Copy this file to ~/.dbt/profiles.yml and replace placeholders.
+# Never commit real passwords, private keys, or account identifiers.
+dbt_learning_shop:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "<your_account_identifier>"
+      user: "<your_username>"
+      password: "<use_environment_variable_or_sso>"
+      role: "<your_role>"
+      database: "<your_database>"
+      warehouse: "<your_warehouse>"
+      schema: dbt_learning
+      threads: 4
+      client_session_keep_alive: false
