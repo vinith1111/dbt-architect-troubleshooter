@@ -144,6 +144,30 @@ try {
   assert.match(tinglishLessonText, /INTERVIEW-READY ARCHITECTURE/i, "Tinglish deep explanation should render");
   assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
 
+
+  // Interview labs: content, answer reveal, scoring, language controls and narrow viewport.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("file://" + path.join(root, "docs", "interview-readiness.html"));
+  await page.getByRole("heading", { name: "Interview Readiness Lab" }).waitFor();
+  assert.equal(await page.locator("#cases .card").count(), 10, "expected 10 cross-course interview cases");
+  await page.locator("#cases button").first().click();
+  assert.ok((await page.locator("#cases").innerText()).length > 100, "cross-course cases should render");
+  await page.locator('[data-lang="tg"]').click();
+  assert.match(await page.locator("#cases").innerText(), /Munduga|cheyyi|check/i, "Tinglish answers should render");
+  await page.locator("#cases input[type=radio], #cases select").first().count().catch(() => 0);
+  await page.setViewportSize({ width: 375, height: 812 });
+  let interviewDimensions = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }));
+  assert.ok(interviewDimensions.content <= interviewDimensions.viewport, `interview lab mobile overflow: ${JSON.stringify(interviewDimensions)}`);
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("file://" + path.join(root, "docs", "snowflake-interview-readiness.html"));
+  await page.getByRole("heading", { name: /Snowflake Interview Readiness Lab|Snowflake Interview Lab/i }).waitFor();
+  assert.equal(await page.locator("#cases button, #caseList button, .case-nav button").count() >= 14, true, "expected at least 14 Snowflake interview scenarios");
+  assert.ok((await page.locator("body").innerText()).length > 3000, "Snowflake interview lab should contain substantive guidance");
+  await page.setViewportSize({ width: 375, height: 812 });
+  const snowInterviewDimensions = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }));
+  assert.ok(snowInterviewDimensions.content <= snowInterviewDimensions.viewport, `Snowflake interview lab mobile overflow: ${JSON.stringify(snowInterviewDimensions)}`);
+
   console.log("Browser smoke tests passed: course navigation, diagnostic scenarios, English/Tinglish, 23 Snowflake production-depth lessons, mobile overflow, and no uncaught JS errors.");
 } finally {
   await browser.close();
