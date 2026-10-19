@@ -135,6 +135,8 @@ try {
     assert.ok(sections.every(text => text.trim().length > 20), `lesson ${i + 1}: empty or too-short guidance section`);
   }
   await page.locator("#navList button").first().click();
+  // Browser storage may retain Tinglish from an earlier course test, so set the baseline explicitly.
+  await page.locator('[data-language="english"]').click();
   const englishLessonText = await page.locator("#lesson").innerText();
   await page.locator('[data-language="tinglish"]').click();
   const tinglishLessonText = await page.locator("#lesson").innerText();
