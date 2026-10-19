@@ -15,14 +15,16 @@ try {
 
   // The learning roadmap should be visible and subjects should be in a beginner-friendly order.
   const roadmapLinks = page.locator(".roadmap-grid a");
-  assert.equal(await roadmapLinks.count(), 5, "expected five core learning steps");
+  assert.equal(await roadmapLinks.count(), 7, "expected five core learning steps plus two interview labs");
   const roadmapTitles = await roadmapLinks.locator("strong").allTextContents();
   assert.deepEqual(roadmapTitles, [
     "SQL Foundations",
     "Python Basics",
     "Snowflake",
     "dbt Projects",
-    "AWS for Data Engineering"
+    "AWS for Data Engineering",
+    "Interview Readiness Lab",
+    "Snowflake Interview Lab"
   ]);
 
   // Every subject lesson should offer the same cross-course navigation.
