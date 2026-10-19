@@ -123,6 +123,7 @@ try {
   await page.locator('[data-answer="0"]').click();
   assert.equal(await page.locator("#a0").evaluate(el => el.classList.contains("open")), true);
   await page.locator('[data-lang="tg"]').click();
+  await page.locator('[data-answer="0"]').click();
   assert.match(await page.locator("#a0").innerText(), /Munduga input grain/i);
   await page.locator('input[name="rating0"][value="2"]').check();
   assert.match(await page.locator("#score").innerText(), /2 \/ 20/);
