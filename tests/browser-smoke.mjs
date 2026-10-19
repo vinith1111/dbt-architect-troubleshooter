@@ -138,6 +138,7 @@ try {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("file://" + path.join(root, "docs", "snowflake-interview-readiness.html"));
   assert.equal(await page.locator("#nav button").count(), 14, "expected 14 Snowflake interview cases");
+  assert.equal(await page.locator("#scoreText").innerText(), "0 of 14 cases attempted", "initial attempted-case count should match all 14 cases");
   const firstCaseTitle = await page.locator("#case h2").innerText();
   await page.locator("#nav button").nth(1).click();
   assert.notEqual(await page.locator("#case h2").innerText(), firstCaseTitle, "case navigation should change the active case");
