@@ -22,11 +22,12 @@ If evidence is missing or ambiguous, request more diagnostic evidence instead of
 | Incremental models | Missed updates, late-arriving data, incorrect `unique_key` | Implemented when a recognized structured issue signal is supplied |
 | Snapshots | Missing/invalid unique key, missing/null `updated_at`, unexpected history | Implemented when a recognized structured issue signal is supplied |
 | Schema evolution | Added column not propagated, removed/renamed column, contract mismatch | Implemented when a recognized structured issue signal is supplied |
+| Performance | Runtime regression, join row explosion, unexpectedly large scans | Implemented when a recognized structured issue signal is supplied; root cause is not assumed |
 | Sources | Missing source / source definition | Planned |
 | Packages/macros | Package resolution/version and specific macro compilation | Planned |
 | Execution | Warehouse permission, connection, timeout, resource errors | Planned |
 | CI/environment | Local vs CI profile, target, and environment differences | Planned |
-| Performance | Expensive scans, joins, spilling, warehouse sizing | Planned |
+| Performance | Spilling and adapter-specific query-profile interpretation | Planned |
 
 ## Current implementation boundary
 
