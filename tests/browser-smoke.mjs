@@ -144,7 +144,46 @@ try {
   assert.match(tinglishLessonText, /INTERVIEW-READY ARCHITECTURE/i, "Tinglish deep explanation should render");
   assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
 
-  console.log("Browser smoke tests passed: course navigation, diagnostic scenarios, English/Tinglish, 23 Snowflake production-depth lessons, mobile overflow, and no uncaught JS errors.");
+  // Verify the new cross-course interview lab: all ten cases render, answers open,
+  // language switching works, and self-ratings update the score.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("file://" + path.join(root, "docs", "interview-readiness.html"));
+  assert.equal(await page.locator("article.card").count(), 10, "expected 10 cross-course interview cases");
+  await page.locator('[data-answer="0"]').click();
+  assert.equal(await page.locator("#a0").evaluate(el => el.classList.contains("open")), true);
+  await page.locator('[data-lang="tg"]').click();
+  await page.locator('[data-answer="0"]').click();
+  assert.match(await page.locator("#a0").innerText(), /Munduga input grain/i);
+  await page.locator('input[name="rating0"][value="2"]').check();
+  assert.match(await page.locator("#score").innerText(), /2 \/ 20/);
+  await page.setViewportSize({ width: 375, height: 812 });
+  const interviewDimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth
+  }));
+  assert.ok(interviewDimensions.content <= interviewDimensions.viewport, `interview lab mobile overflow: ${JSON.stringify(interviewDimensions)}`);
+
+  // Verify the Snowflake lab navigation, case rendering, rating UI and mobile layout.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("file://" + path.join(root, "docs", "snowflake-interview-readiness.html"));
+  assert.equal(await page.locator("#nav button").count(), 14, "expected 14 Snowflake interview cases");
+  assert.equal(await page.locator("#scoreText").innerText(), "0 of 14 cases attempted", "initial attempted-case count should match all 14 cases");
+  const firstCaseTitle = await page.locator("#case h2").innerText();
+  await page.locator("#nav button").nth(1).click();
+  assert.notEqual(await page.locator("#case h2").innerText(), firstCaseTitle, "case navigation should change the active case");
+  assert.equal(await page.locator("#case .rating input").count(), 4, "each Snowflake case should have four self-rating options");
+  await page.locator("#case .rating input").last().check();
+  assert.match(await page.locator("#score").innerText(), /3 \/ 42/);
+  await page.setViewportSize({ width: 375, height: 812 });
+  const snowflakeInterviewDimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth
+  }));
+  assert.ok(snowflakeInterviewDimensions.content <= snowflakeInterviewDimensions.viewport, `Snowflake interview lab mobile overflow: ${JSON.stringify(snowflakeInterviewDimensions)}`);
+  assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
+
+
+  console.log("Browser smoke tests passed: course navigation, diagnostic scenarios, English/Tinglish, 23 Snowflake production-depth lessons, both interview labs, scoring, mobile overflow, and no uncaught JS errors.");
 } finally {
   await browser.close();
 }
