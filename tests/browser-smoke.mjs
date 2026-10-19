@@ -12,6 +12,34 @@ try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(pageUrl);
+
+  // The learning roadmap should be visible and subjects should be in a beginner-friendly order.
+  const roadmapLinks = page.locator(".roadmap-grid a");
+  assert.equal(await roadmapLinks.count(), 5, "expected five core learning steps");
+  const roadmapTitles = await roadmapLinks.locator("strong").allTextContents();
+  assert.deepEqual(roadmapTitles, [
+    "SQL Foundations",
+    "Python Basics",
+    "Snowflake",
+    "dbt Projects",
+    "AWS for Data Engineering"
+  ]);
+
+  // Every subject lesson should offer the same cross-course navigation.
+  const coursePages = [
+    { file: "sql-learn.html", active: "SQL" },
+    { file: "python-learn.html", active: "Python" },
+    { file: "snowflake-learn.html", active: "Snowflake" },
+    { file: "learn.html", active: "dbt" },
+    { file: "aws-learn.html", active: "AWS" }
+  ];
+  for (const course of coursePages) {
+    await page.goto("file://" + path.join(root, "docs", course.file));
+    assert.equal(await page.locator(".course-path a").count(), 5, `${course.file}: expected all course links`);
+    assert.equal(await page.locator(".course-path a[aria-current='page']").innerText(), course.active);
+  }
+
+  await page.goto(pageUrl);
   // The learning and guided tools are intentionally collapsed by default.
   await page.locator("details.more-learning > summary").click();
   await page.getByRole("heading", { name: /Practice real-world dbt problems/i }).waitFor();
@@ -63,7 +91,29 @@ try {
   assert.ok(dimensions.content <= dimensions.viewport, `mobile horizontal overflow: ${JSON.stringify(dimensions)}`);
   assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
 
-  console.log("Browser smoke tests passed: 5 scenarios, feedback/reset, guided unknown/known routing, mobile overflow, and no uncaught JS errors.");
+  // Verify that the learning page makes difficult concepts concrete in both languages.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("file://" + path.join(root, "docs", "learn.html"));
+  await page.getByRole("heading", { name: "What Is dbt?" }).waitFor();
+  assert.match(await page.locator(".learning-guide").innerText(), /Mental model/i);
+  assert.equal(await page.locator(".learning-guide ol li").count(), 3);
+
+  await page.getByRole("button", { name: /Incremental models & unique_key/ }).click();
+  assert.match(await page.locator(".learning-guide").innerText(), /growing ledger/i);
+  assert.equal(await page.locator(".learning-guide ol li").count(), 3);
+  await page.locator('[data-language="tinglish"]').click();
+  assert.match(await page.locator(".learning-guide").innerText(), /Simple ga imagine chey/i);
+  assert.match(await page.locator(".learning-guide").innerText(), /Incremental model growing ledger/i);
+
+  await page.setViewportSize({ width: 375, height: 812 });
+  const learnDimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth
+  }));
+  assert.ok(learnDimensions.content <= learnDimensions.viewport, `learning page mobile overflow: ${JSON.stringify(learnDimensions)}`);
+  assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
+
+  console.log("Browser smoke tests passed: diagnostic scenarios, safe unknown routing, learning guides in English/Tinglish, progress UI, mobile overflow, and no uncaught JS errors.");
 } finally {
   await browser.close();
 }
