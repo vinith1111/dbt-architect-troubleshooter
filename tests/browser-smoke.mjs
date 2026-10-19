@@ -12,6 +12,34 @@ try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(pageUrl);
+
+  // The learning roadmap should be visible and subjects should be in a beginner-friendly order.
+  const roadmapLinks = page.locator(".roadmap-grid a");
+  assert.equal(await roadmapLinks.count(), 5, "expected five core learning steps");
+  const roadmapTitles = await roadmapLinks.locator("strong").allTextContents();
+  assert.deepEqual(roadmapTitles, [
+    "SQL Foundations",
+    "Python Basics",
+    "Snowflake",
+    "dbt Projects",
+    "AWS for Data Engineering"
+  ]);
+
+  // Every subject lesson should offer the same cross-course navigation.
+  const coursePages = [
+    { file: "sql-learn.html", active: "SQL" },
+    { file: "python-learn.html", active: "Python" },
+    { file: "snowflake-learn.html", active: "Snowflake" },
+    { file: "learn.html", active: "dbt" },
+    { file: "aws-learn.html", active: "AWS" }
+  ];
+  for (const course of coursePages) {
+    await page.goto("file://" + path.join(root, "docs", course.file));
+    assert.equal(await page.locator(".course-path a").count(), 5, `${course.file}: expected all course links`);
+    assert.equal(await page.locator(".course-path a[aria-current='page']").innerText(), course.active);
+  }
+
+  await page.goto(pageUrl);
   // The learning and guided tools are intentionally collapsed by default.
   await page.locator("details.more-learning > summary").click();
   await page.getByRole("heading", { name: /Practice real-world dbt problems/i }).waitFor();
