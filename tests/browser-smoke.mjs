@@ -134,8 +134,12 @@ try {
     assert.ok(sections.length >= 5, `lesson ${i + 1}: expected practice and production-depth content`);
     assert.ok(sections.every(text => text.trim().length > 20), `lesson ${i + 1}: empty or too-short guidance section`);
   }
+  await page.locator("#navList button").first().click();
+  const englishLessonText = await page.locator("#lesson").innerText();
   await page.locator('[data-language="tinglish"]').click();
-  assert.match(await page.locator("#lesson").innerText(), /Snowflake lo three layers/i, "Tinglish deep explanation should render");
+  const tinglishLessonText = await page.locator("#lesson").innerText();
+  assert.notEqual(tinglishLessonText, englishLessonText, "language switch should change the lesson explanation");
+  assert.match(tinglishLessonText, /INTERVIEW-READY ARCHITECTURE/i, "Tinglish deep explanation should render");
   assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
 
   console.log("Browser smoke tests passed: course navigation, diagnostic scenarios, English/Tinglish, 23 Snowflake production-depth lessons, mobile overflow, and no uncaught JS errors.");
