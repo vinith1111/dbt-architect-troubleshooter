@@ -141,7 +141,7 @@ try {
   const firstCaseTitle = await page.locator("#case h2").innerText();
   await page.locator("#nav button").nth(1).click();
   assert.notEqual(await page.locator("#case h2").innerText(), firstCaseTitle, "case navigation should change the active case");
-  assert.equal(await page.locator("#case .rating input").count(), 3, "each Snowflake case should have three self-rating options");
+  assert.equal(await page.locator("#case .rating input").count(), 4, "each Snowflake case should have four self-rating options");
   await page.locator("#case .rating input").last().check();
   assert.match(await page.locator("#score").innerText(), /3 \/ 42/);
   await page.setViewportSize({ width: 375, height: 812 });
