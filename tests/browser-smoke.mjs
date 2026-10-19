@@ -63,7 +63,29 @@ try {
   assert.ok(dimensions.content <= dimensions.viewport, `mobile horizontal overflow: ${JSON.stringify(dimensions)}`);
   assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
 
-  console.log("Browser smoke tests passed: 5 scenarios, feedback/reset, guided unknown/known routing, mobile overflow, and no uncaught JS errors.");
+  // Verify that the learning page makes difficult concepts concrete in both languages.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("file://" + path.join(root, "docs", "learn.html"));
+  await page.getByRole("heading", { name: "What Is dbt?" }).waitFor();
+  assert.match(await page.locator(".learning-guide").innerText(), /Mental model/i);
+  assert.equal(await page.locator(".learning-guide ol li").count(), 3);
+
+  await page.getByRole("button", { name: /Incremental models & unique_key/ }).click();
+  assert.match(await page.locator(".learning-guide").innerText(), /growing ledger/i);
+  assert.equal(await page.locator(".learning-guide ol li").count(), 3);
+  await page.locator('[data-language="tinglish"]').click();
+  assert.match(await page.locator(".learning-guide").innerText(), /Simple ga imagine chey/i);
+  assert.match(await page.locator(".learning-guide").innerText(), /Incremental model growing ledger/i);
+
+  await page.setViewportSize({ width: 375, height: 812 });
+  const learnDimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth
+  }));
+  assert.ok(learnDimensions.content <= learnDimensions.viewport, `learning page mobile overflow: ${JSON.stringify(learnDimensions)}`);
+  assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
+
+  console.log("Browser smoke tests passed: diagnostic scenarios, safe unknown routing, learning guides in English/Tinglish, progress UI, mobile overflow, and no uncaught JS errors.");
 } finally {
   await browser.close();
 }
