@@ -113,7 +113,38 @@ try {
   assert.ok(learnDimensions.content <= learnDimensions.viewport, `learning page mobile overflow: ${JSON.stringify(learnDimensions)}`);
   assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
 
-  console.log("Browser smoke tests passed: diagnostic scenarios, safe unknown routing, learning guides in English/Tinglish, progress UI, mobile overflow, and no uncaught JS errors.");
+  // Verify every Snowflake lesson renders its production-depth sections.
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("file://" + path.join(root, "docs", "snowflake-learn.html"));
+  const snowflakeLessons = page.locator("#navList button");
+  assert.equal(await snowflakeLessons.count(), 23, "expected 23 Snowflake lessons");
+  for (let i = 0; i < 23; i++) {
+    await snowflakeLessons.nth(i).click();
+    const lesson = page.locator("#lesson");
+    await lesson.locator("h2").waitFor();
+    for (const heading of [
+      "Real project scenario",
+      "Debugging checklist",
+      "Common production mistakes",
+      "Interview / project review question"
+    ]) {
+      assert.equal(await lesson.getByRole("heading", { name: heading }).count(), 1, `lesson ${i + 1}: missing ${heading}`);
+    }
+    const sections = await lesson.locator(".mini").allTextContents();
+    assert.ok(sections.length >= 5, `lesson ${i + 1}: expected practice and production-depth content`);
+    assert.ok(sections.every(text => text.trim().length > 20), `lesson ${i + 1}: empty or too-short guidance section`);
+  }
+  await page.locator("#navList button").first().click();
+  // Browser storage may retain Tinglish from an earlier course test, so set the baseline explicitly.
+  await page.locator('[data-language="english"]').click();
+  const englishLessonText = await page.locator("#lesson").innerText();
+  await page.locator('[data-language="tinglish"]').click();
+  const tinglishLessonText = await page.locator("#lesson").innerText();
+  assert.notEqual(tinglishLessonText, englishLessonText, "language switch should change the lesson explanation");
+  assert.match(tinglishLessonText, /INTERVIEW-READY ARCHITECTURE/i, "Tinglish deep explanation should render");
+  assert.deepEqual(errors, [], `browser JavaScript errors: ${errors.join("; ")}`);
+
+  console.log("Browser smoke tests passed: course navigation, diagnostic scenarios, English/Tinglish, 23 Snowflake production-depth lessons, mobile overflow, and no uncaught JS errors.");
 } finally {
   await browser.close();
 }
